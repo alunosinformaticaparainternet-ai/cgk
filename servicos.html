@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pé de Meia - Serviços</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(0, 100, 190, 0.45),
+                    rgba(0, 80, 170, 0.65)
+                ),
+                url("tela pe de meisa.jpg") center/cover fixed no-repeat;
+
+            color: white;
+        }
+
+        /* =========================
+           NAVEGAÇÃO
+        ========================= */
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            padding: 22px 6%;
+
+            z-index: 100;
+        }
+
+        .navbar {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* LOGO */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            border-radius: 50%;
+
+            font-size: 23px;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* MENU */
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 11px 18px;
+
+            border-radius: 25px;
+
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .menu .servicos {
+            background: white;
+            color: #0757c9;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* USUÁRIO */
+
+        .usuario {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            border-radius: 50%;
+
+            text-decoration: none;
+            font-size: 21px;
+
+            transition: 0.3s;
+        }
+
+        .usuario:hover {
+            transform: scale(1.08);
+        }
+
+        /* =========================
+           CONTEÚDO
+        ========================= */
+
+        main {
+            min-height: 100vh;
+
+            padding: 140px 7% 70px;
+        }
+
+        .titulo {
+            max-width: 750px;
+            margin-bottom: 45px;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 8px 18px;
+            margin-bottom: 18px;
+
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+
+            border-radius: 30px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            backdrop-filter: blur(6px);
+        }
+
+        h1 {
+            font-size: clamp(38px, 5vw, 60px);
+            margin-bottom: 15px;
+        }
+
+        .titulo p {
+            max-width: 650px;
+
+            font-size: 17px;
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .servicos-container {
+            max-width: 1200px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .card {
+            min-height: 230px;
+
+            padding: 28px;
+
+            display: flex;
+            flex-direction: column;
+
+            background: rgba(255, 255, 255, 0.15);
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius: 25px;
+
+            backdrop-filter: blur(12px);
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+            text-decoration: none;
+            color: white;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+
+            background: rgba(255, 255, 255, 0.23);
+
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .icone {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            color: #0757c9;
+
+            border-radius: 17px;
+
+            font-size: 27px;
+
+            margin-bottom: 22px;
+        }
+
+        .card h2 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            line-height: 1.6;
+
+            color: rgba(255, 255, 255, 0.86);
+        }
+
+        .acessar {
+            margin-top: auto;
+            padding-top: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            color: white;
+        }
+
+        /* =========================
+           DESTAQUE
+        ========================= */
+
+        .card-destaque {
+            background: rgba(255, 255, 255, 0.22);
+
+            border: 1px solid rgba(255, 255, 255, 0.45);
+        }
+
+        /* =========================
+           RODAPÉ
+        ========================= */
+
+        .rodape {
+            margin-top: 45px;
+
+            font-size: 12px;
+
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* =========================
+           RESPONSIVIDADE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .servicos-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            header {
+                padding: 18px 4%;
+            }
+
+            .logo strong {
+                display: none;
+            }
+
+            .menu {
+                gap: 2px;
+            }
+
+            .menu a {
+                padding: 9px 10px;
+                font-size: 11px;
+            }
+
+            .usuario {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            main {
+                padding: 120px 6% 50px;
+            }
+
+            .servicos-container {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                min-height: 200px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .menu a:nth-child(3),
+            .menu a:nth-child(4) {
+                display: none;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            .titulo p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVEGAÇÃO
+    ========================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="entrar.html" class="logo">
+                <span>🎓</span>
+                <strong>Pé de Meia</strong>
+            </a>
+
+            <div class="menu">
+
+                <a href="entrar.html">
+                    INÍCIO
+                </a>
+
+                <a href="servicos.html" class="servicos">SERVIÇOS</a>
+                <a href="depoimento.html">DEPOIMENTOS</a>
+                <a href="contato.html">CONTATO</a>
+                 <a href="SIT.HTML" class="situação">SITUAÇÃO</a>
+            </div>
+            <a href="perfil.html" class="usuario" title="Perfil">👤</a>
+        </nav>
+    </header>
+    
+
+
+
+
+    
+
+    <main>
+
+        <section class="titulo">
+
+            <div class="tag">
+                PÉ DE MEIA
+            </div>
+
+            <h1>
+                Nossos serviços
+            </h1>
+
+            <p>
+                Tenha acesso às principais informações da sua vida
+                escolar em um só lugar. Consulte notas, frequência
+                e desempenho de forma rápida e organizada.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             SERVIÇOS
+        ========================== -->
+
+        <section class="servicos-container">
+
+
+            <!-- NOTAS -->
+
+            <a href="notas.html" class="card card-destaque">
+
+                <div class="icone">
+                    📊
+                </div>
+
+                <h2>
+                    Ver Notas
+                </h2>
+
+                <p>
+                    Consulte suas notas por matéria, médias
+                    e situação em cada disciplina.
+                </p>
+
+                <div class="acessar">
+                    Acessar serviço →
+                </div>
+
+            </a>
+
+
+            <!-- FREQUÊNCIA -->
+
+            <a href="frequencia.html" class="card">
+
+                <div class="icone">
+                    📅
+                </div>
+
+                <h2>
+                    Frequência
+                </h2>
+
+                <p>
+                    Acompanhe sua frequência escolar,
+                    faltas e presença durante o período letivo.
+                </p>
+
+                <div class="acessar">
+                    Acessar serviço →
+                </div>
+
+            </a>
+
+
+            <!-- DESEMPENHO -->
+
+            <a href="desempenho.html" class="card">
+
+                <div class="icone">
+                    📈
+                </div>
+
+                <h2>
+                    Desempenho
+                </h2>
+
+                <p>
+                    Veja seu desempenho geral e acompanhe
+                    sua evolução escolar.
+                </p>
+
+                <div class="acessar">
+                    Acessar serviço →
+                </div>
+
+            </a>
+
+
+            <!-- SITUAÇÃO ESCOLAR -->
+
+            <a href="notas.html" class="card">
+
+                <div class="icone">
+                    🎓
+                </div>
+
+                <h2>
+                    Situação Escolar
+                </h2>
+
+                <p>
+                    Confira se você está aprovado ou reprovado
+                    nas disciplinas.
+                </p>
+
+                <div class="acessar">
+                    Acessar serviço →
+                </div>
+
+            </a>
+
+
+            <!-- PÉ DE MEIA -->
+
+            <a href="frequencia.html" class="card">
+                <div class="icone">
+                💳
+                </div>
+                <h2>
+                    Pé de Meia
+                </h2>
+                <p>
+                    Acompanhe a situação do benefício de acordo
+                    com sua frequência escolar.
+                </p>
+
+                <div class="acessar">
+                    Ver situação →
+                </div>
+
+            </a>
+
+
+            <!-- INFORMAÇÕES -->
+
+            <a href="#" class="card">
+
+                <div class="icone">
+                    ℹ️
+                </div>
+
+                <h2>
+                    Informações
+                </h2>
+
+                <p>
+                    Consulte informações importantes sobre
+                    sua escola e sua vida acadêmica.
+                </p>
+
+                <div class="acessar">
+                    Ver informações →
+                </div>
+
+            </a>
+
+        </section>
+
+
+        <div class="rodape">
+            © 2026 Pé de Meia — Acompanhamento Escolar
+        </div>
+
+    </main>
+
+</body>
+
+</html>
