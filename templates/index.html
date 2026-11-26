@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pé de Meia - Login</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #087bd9, #05a9ef);
+    }
+
+    .container {
+        width: 900px;
+        min-height: 550px;
+        background: #ffffff;
+        border-radius: 25px;
+        display: flex;
+        overflow: hidden;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    /* LADO AZUL */
+    .lado-esquerdo {
+        width: 50%;
+        background: linear-gradient(160deg, #0757c9, #079be8);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .logo {
+        width: 130px;
+        height: 130px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+    }
+
+    .logo span {
+        font-size: 58px;
+    }
+
+    .lado-esquerdo h1 {
+        font-size: 42px;
+        margin-bottom: 12px;
+    }
+
+    .lado-esquerdo p {
+        font-size: 17px;
+        line-height: 1.5;
+        max-width: 340px;
+    }
+
+    /* LADO DO LOGIN */
+    .lado-direito {
+        width: 50%;
+        padding: 55px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .lado-direito h2 {
+        color: #0757c9;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .subtitulo {
+        color: #777;
+        margin-bottom: 30px;
+        font-size: 16px;
+    }
+
+    .campo {
+        margin-bottom: 20px;
+    }
+
+    .campo label {
+        display: block;
+        color: #222;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .campo input {
+        width: 100%;
+        height: 50px;
+        border: 1px solid #cccccc;
+        border-radius: 10px;
+        padding: 0 15px;
+        font-size: 16px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .campo input:focus {
+        border-color: #0757c9;
+        box-shadow: 0 0 5px rgba(7, 87, 201, 0.20);
+    }
+
+    /* CAMPO DA SENHA */
+    .senha-container {
+        position: relative;
+    }
+
+    .senha-container input {
+        padding-right: 50px;
+    }
+
+    .mostrar-senha {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    /* ESQUECI SENHA */
+    .esqueci {
+        text-align: right;
+        margin-top: -7px;
+        margin-bottom: 25px;
+    }
+
+    .esqueci a {
+        color: #0757c9;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .esqueci a:hover {
+        text-decoration: underline;
+    }
+
+    /* BOTÃO ENTRAR */
+    .botao {
+        width: 100%;
+        height: 52px;
+        border: none;
+        border-radius: 10px;
+        background: #0757c9;
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .botao:hover {
+        background: #00439c;
+    }
+
+    /* MENSAGEM */
+    #mensagem {
+        margin-top: 15px;
+        text-align: center;
+        font-weight: bold;
+        min-height: 20px;
+    }
+
+    /* CADASTRO */
+    .cadastro {
+        text-align: center;
+        margin-top: 25px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    /* LINK CADASTRE-SE */
+    .link-cadastro {
+        color: #0757c9;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .link-cadastro:hover {
+        text-decoration: underline;
+        color: #00439c;
+    }
+
+    /* CELULAR */
+    @media (max-width: 750px) {
+
+        body {
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .lado-esquerdo,
+        .lado-direito {
+            width: 100%;
+        }
+
+        .lado-esquerdo {
+            min-height: 300px;
+            padding: 30px;
+        }
+
+        .logo {
+            width: 90px;
+            height: 90px;
+        }
+
+        .logo span {
+            font-size: 40px;
+        }
+
+        .lado-esquerdo h1 {
+            font-size: 32px;
+        }
+
+        .lado-direito {
+            padding: 40px 30px;
+        }
+    }
+</style>
+
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+    <!-- LADO ESQUERDO -->
+    <div class="lado-esquerdo">
+
+        <div class="logo">
+            <span>🎓</span>
+        </div>
+
+        <h1>Pé de Meia</h1>
+
+        <p>
+            Acompanhe sua vida escolar,
+            consulte suas informações e
+            fique por dentro das novidades.
+        </p>
+
+    </div>
+
+    <!-- LADO DIREITO -->
+    <div class="lado-direito">
+
+        <h2>Bem-vindo!</h2>
+
+        <p class="subtitulo">
+            Entre na sua conta para continuar.
+        </p>
+
+        <form id="formLogin">
+
+            <!-- USUÁRIO -->
+            <div class="campo">
+
+                <label for="usuario">
+                    Usuário
+                </label>
+
+                <input
+                    type="text"
+                    id="usuario"
+                    placeholder="Digite seu usuário"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+            <!-- SENHA -->
+            <div class="campo">
+
+                <label for="senha">
+                    Senha
+                </label>
+
+                <div class="senha-container">
+
+                    <input
+                        type="password"
+                        id="senha"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="mostrar-senha"
+                        id="mostrarSenha"
+                        aria-label="Mostrar senha"
+                    >
+                        👁️
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- ESQUECI A SENHA -->
+            <div class="esqueci">
+
+                <a href="#">
+                    Esqueci minha senha
+                </a>
+
+            </div>
+
+            <!-- ENTRAR -->
+            <button
+                type="submit"
+                class="botao"
+            >
+                ENTRAR
+            </button>
+
+            <!-- MENSAGEM -->
+            <div id="mensagem"></div>
+
+        </form>
+
+        <!-- CADASTRO -->
+        <p class="cadastro">
+            Ainda não possui uma conta?
+            <a
+                href="cadastro.html"
+                class="link-cadastro"
+            >
+                Cadastre-se
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+
+    // MOSTRAR / ESCONDER SENHA
+
+    const senha = document.getElementById("senha");
+
+    const mostrarSenha =
+        document.getElementById("mostrarSenha");
+
+    mostrarSenha.addEventListener("click", function () {
+
+        if (senha.type === "password") {
+
+            senha.type = "text";
+
+            mostrarSenha.textContent = "🙈";
+
+        } else {
+
+            senha.type = "password";
+
+            mostrarSenha.textContent = "👁️";
+
+        }
+
+    });
+
+
+    // LOGIN
+
+    const formLogin =
+        document.getElementById("formLogin");
+
+    const mensagem =
+        document.getElementById("mensagem");
+
+    formLogin.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        const usuario =
+            document
+            .getElementById("usuario")
+            .value
+            .trim();
+
+        const senhaDigitada =
+            document
+            .getElementById("senha")
+            .value;
+
+
+        // USUÁRIO E SENHA
+
+        if (
+            usuario === "cem2" &&
+            senhaDigitada === "1234"
+        ) {
+
+            mensagem.style.color = "green";
+
+            mensagem.textContent =
+                "Login realizado com sucesso!";
+
+
+            // ABRIR PÁGINA INICIAL
+
+            setTimeout(function () {
+
+                window.location.href = "entrar.html";
+
+            }, 1000);
+
+        } else {
+
+            mensagem.style.color = "red";
+
+            mensagem.textContent =
+                "Usuário ou senha incorretos.";
+
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>
