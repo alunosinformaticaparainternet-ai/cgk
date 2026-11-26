@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pé de Meia - Frequência do Professor</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                linear-gradient(
+                    rgba(0, 100, 190, 0.55),
+                    rgba(0, 80, 170, 0.75)
+                ),
+                url("tela pe de meisa.jpg") center/cover fixed no-repeat;
+            color: #222;
+        }
+
+        header {
+            width: 100%;
+            background: #087bd9;
+            padding: 18px 6%;
+            box-shadow: 0 4px 15px rgba(0,0,0,.15);
+        }
+
+        .navbar {
+            max-width: 1250px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 50%;
+            font-size: 22px;
+        }
+
+        .menu {
+            display: flex;
+            gap: 8px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .menu a:hover {
+            background: rgba(255,255,255,.18);
+        }
+
+        .perfil {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        main {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto 60px;
+        }
+
+        .titulo {
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 7px 15px;
+            margin-bottom: 12px;
+            background: rgba(255,255,255,.18);
+            border: 1px solid rgba(255,255,255,.35);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .titulo h1 {
+            font-size: clamp(32px,5vw,48px);
+            margin-bottom: 8px;
+        }
+
+        .titulo p {
+            font-size: 15px;
+            color: rgba(255,255,255,.88);
+        }
+
+        .controle {
+            background: white;
+            padding: 22px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.15);
+            margin-bottom: 20px;
+        }
+
+        .controle-grid {
+            display: grid;
+            grid-template-columns: 180px 180px 1fr;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .campo label {
+            color: #333;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            background: #f7f8fa;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .campo input:focus,
+        .campo select:focus {
+            border-color: #087bd9;
+            background: white;
+        }
+
+        .resumo {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .resumo-card {
+            background: white;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.13);
+        }
+
+        .resumo-card p {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .resumo-card strong {
+            color: #0757c9;
+            font-size: 27px;
+        }
+
+        .resumo-card.presente strong {
+            color: #16803c;
+        }
+
+        .resumo-card.falta strong {
+            color: #d93636;
+        }
+
+        .lista-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0,0,0,.17);
+        }
+
+        .lista-topo {
+            padding: 20px 23px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+        }
+
+        .lista-topo h2 {
+            color: #0757c9;
+            font-size: 20px;
+        }
+
+        .lista-topo span {
+            color: #777;
+            font-size: 12px;
+        }
+
+        .tabela-container {
+            width: 100%;
+            overflow-x: auto;
+            max-height: 650px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 780px;
+        }
+
+        th {
+            background: #087bd9;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-size: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        td {
+            padding: 13px 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        tr:hover td {
+            background: #f7fbff;
+        }
+
+        .numero {
+            color: #999;
+            width: 50px;
+        }
+
+        .nome-aluno {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .turma {
+            color: #666;
+            font-weight: bold;
+        }
+
+        .acoes-frequencia {
+            display: flex;
+            gap: 7px;
+        }
+
+        .btn-status {
+            border: none;
+            padding: 8px 13px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+            transition: .2s;
+        }
+
+        .btn-status:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-presente {
+            background: #e5f8ec;
+            color: #16803c;
+            border: 1px solid #b8e9ca;
+        }
+
+        .btn-falta {
+            background: #fdeaea;
+            color: #d93636;
+            border: 1px solid #f2bcbc;
+        }
+
+        .btn-status.ativo {
+            box-shadow: 0 0 0 3px rgba(0,0,0,.10);
+            transform: scale(1.03);
+        }
+
+        .status-atual {
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .status-atual.presente {
+            color: #16803c;
+        }
+
+        .status-atual.falta {
+            color: #d93636;
+        }
+
+        .status-atual.pendente {
+            color: #999;
+        }
+
+        .rodape-lista {
+            padding: 20px 23px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+
+        .informacao {
+            color: #777;
+            font-size: 12px;
+        }
+
+        .salvar {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 25px;
+            background: linear-gradient(135deg,#0757c9,#079be8);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .salvar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(7,87,201,.3);
+        }
+
+        #mensagem {
+            display: none;
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            padding: 15px 20px;
+            background: #16803c;
+            color: white;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0,0,0,.2);
+            z-index: 999;
+        }
+
+        .rodape {
+            margin-top: 25px;
+            color: rgba(255,255,255,.75);
+            font-size: 11px;
+            text-align: center;
+        }
+
+        @media (max-width:850px) {
+
+            .controle-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .controle-grid .campo:last-child {
+                grid-column: 1/-1;
+            }
+
+            .resumo {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width:650px) {
+
+            header {
+                padding: 15px 4%;
+            }
+
+            .logo strong {
+                display: none;
+            }
+
+            .menu a {
+                display: none;
+            }
+
+            main {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .controle-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controle-grid .campo:last-child {
+                grid-column: auto;
+            }
+
+            .resumo {
+                grid-template-columns: 1fr;
+            }
+
+            .lista-topo {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .rodape-lista {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .salvar {
+                width: 100%;
+            }
+
+            #mensagem {
+                left: 20px;
+                right: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <nav class="navbar">
+
+        <a href="entrar.html" class="logo">
+            <span>🎓</span>
+            <strong>Pé de Meia</strong>
+        </a>
+
+        <div class="menu">
+
+            <a href="entrar.html">
+                INÍCIO
+            </a>
+
+            <a href="prof.html">
+                FREQUÊNCIA
+            </a>
+
+            <a href="desempenho.html">
+                DESEMPENHO
+            </a>
+
+        </div>
+
+        <a href="perfil.html" class="perfil">
+            👤
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="titulo">
+
+        <div class="tag">
+            ÁREA DO PROFESSOR
+        </div>
+
+        <h1>
+            Lista de frequência
+        </h1>
+
+        <p>
+            Marque a presença ou falta dos alunos
+            de forma rápida e organizada.
+        </p>
+
+    </section>
+
+
+    <section class="controle">
+
+        <div class="controle-grid">
+
+            <div class="campo">
+
+                <label for="turma">
+                    TURMA
+                </label>
+
+                <select id="turma">
+
+                    <option value="todas">
+                        Todas as turmas
+                    </option>
+
+                    <option value="100">Turma 100</option>
+                    <option value="101">Turma 101</option>
+                    <option value="102">Turma 102</option>
+                    <option value="103">Turma 103</option>
+                    <option value="200">Turma 200</option>
+                    <option value="201">Turma 201</option>
+                    <option value="202">Turma 202</option>
+                    <option value="300">Turma 300</option>
+                    <option value="301">Turma 301</option>
+                    <option value="302">Turma 302</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="data">
+                    DATA
+                </label>
+
+                <input type="date" id="data">
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="pesquisa">
+                    PESQUISAR ALUNO
+                </label>
+
+                <input
+                    type="text"
+                    id="pesquisa"
+                    placeholder="Digite o nome do aluno..."
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="resumo">
+
+        <div class="resumo-card">
+
+            <p>
+                TOTAL DE ALUNOS
+            </p>
+
+            <strong id="total">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="resumo-card presente">
+
+            <p>
+                PRESENTES
+            </p>
+
+            <strong id="presentes">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="resumo-card falta">
+
+            <p>
+                FALTAS
+            </p>
+
+            <strong id="faltas">
+                0
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <section class="lista-card">
+
+        <div class="lista-topo">
+
+            <h2>
+                Lista de alunos
+            </h2>
+
+            <span id="dataExibida">
+                Frequência do dia
+            </span>
+
+        </div>
+
+
+        <div class="tabela-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Nº</th>
+
+                        <th>ALUNO</th>
+
+                        <th>TURMA</th>
+
+                        <th>STATUS</th>
+
+                        <th>MARCAR FREQUÊNCIA</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="listaAlunos"></tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="rodape-lista">
+
+            <div class="informacao">
+                Clique em Presente ou Falta para registrar a frequência.
+            </div>
+
+            <button
+                class="salvar"
+                onclick="salvarFrequencia()">
+
+                SALVAR FREQUÊNCIA
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <div class="rodape">
+
+        © 2026 Pé de Meia — Acompanhamento Escolar
+
+    </div>
+
+</main>
+
+
+<div id="mensagem"></div>
+
+
+<script>
+
+const alunos = [
+
+/* =========================
+   TURMA 100
+========================= */
+
+{nome:"AGATA SAMINEZ MARQUES",turma:"100"},
+{nome:"AMANDA ISABELA DA SILVA ROCHA",turma:"100"},
+{nome:"ANA BEATRIZ MELONIO BATISTA",turma:"100"},
+{nome:"ANA BEATRIZ SILVA DE SOUSA",turma:"100"},
+{nome:"ANA GABRIELA DE LIMA ALVES",turma:"100"},
+{nome:"ANA JULLYA PRAZERES DOS SANTOS",turma:"100"},
+{nome:"ANA LUIZA MIRANDA PINHEIRO",turma:"100"},
+{nome:"BRUNO FERNANDO RODRIGUES FERREIRA",turma:"100"},
+{nome:"CARLA CRISTINA DOS ANJOS MACIEL",turma:"100"},
+{nome:"DAVI NASCIMENTO VIEIRA",turma:"100"},
+{nome:"DEYSE VITORIA MORAES DE BRITO",turma:"100"},
+{nome:"EVELLYN GABRIELE BORGES PIRES",turma:"100"},
+{nome:"JAMILLY VICTORIA FERREIRA CASTRO",turma:"100"},
+{nome:"JOAO LUCAS DE ALMEIDA BRITO",turma:"100"},
+{nome:"JOAO LUCAS RIBEIRO VIEIRA",turma:"100"},
+{nome:"JOAO VICTOR DINIZ LOPES",turma:"100"},
+{nome:"JULIANA GOMES RIBEIRO",turma:"100"},
+{nome:"KAMILLY VITORIA MORAES OLIVEIRA DE SOUSA",turma:"100"},
+{nome:"KETENLLEN LORRANNY LEITE MATOS",turma:"100"},
+{nome:"KILSON BUCAR LIMA NETO",turma:"100"},
+{nome:"LARA CRISTINE GOMES TRINDADE",turma:"100"},
+{nome:"LINDSEY LORRANNE DE SOUSA SILVA",turma:"100"},
+{nome:"LUIS FELIPE COSTA DOS SANTOS",turma:"100"},
+{nome:"MARIA CLARA DE SOUZA SILVA",turma:"100"},
+{nome:"PEDRO HENRIQUE DIAS SILVA",turma:"100"},
+{nome:"SAMIRA RAYARA MORAES DOS SANTOS",turma:"100"},
+{nome:"STHEFANE DOURADO DE SOUZA",turma:"100"},
+{nome:"VICTOR HUGO ANUNCIACAO DIAS",turma:"100"},
+{nome:"VITORIA EMILY OLIVEIRA CARNEIRO",turma:"100"},
+{nome:"YSES FERNANDA COSTA GUIMARAES",turma:"100"},
+{nome:"ANA GABRIELLY MAGALHAES PEREIRA",turma:"100"},
+{nome:"CAUA ADRIEL DE MELO MOREIRA",turma:"100"},
+{nome:"CAUA ADRIEL DE MELO MOREIRA",turma:"100"},
+
+/* =========================
+   TURMA 101
+========================= */
+
+{nome:"ALEXSANDRO OLIVEIRA ABREU",turma:"101"},
+{nome:"AMANDA ESTER TEIXEIRA PEREIRA",turma:"101"},
+{nome:"ANA VITORIA PINTO SANTOS",turma:"101"},
+{nome:"ANNY GABRIELLY SILVA DA SILVA",turma:"101"},
+{nome:"CARLOS HENRIQUE VIANA DA CONCEICAO",turma:"101"},
+{nome:"CRISTIAN GOES SALES",turma:"101"},
+{nome:"DAVI NOGUEIRA GUSMAO DA SILVA",turma:"101"},
+{nome:"DOUGLAS RICARDO FERREIRA DO NASCIMENTO",turma:"101"},
+{nome:"EDNO FILIPPE DA SILVA DE OLIVEIRA",turma:"101"},
+{nome:"ELIAS ASAFE ALVES LIMA",turma:"101"},
+{nome:"EMILLY SOPHIA SILVA DE ARAUJO",turma:"101"},
+{nome:"ERICA LORRANY PEREIRA DOS SANTOS",turma:"101"},
+{nome:"ESTHER AZEVEDO DOS SANTOS NOGUEIRA",turma:"101"},
+{nome:"HEDSON CARLOS SILVA PINHEIRO",turma:"101"},
+{nome:"IURY KAUA DUARTE BATISTA",turma:"101"},
+{nome:"JULIA SANTOS FERREIRA",turma:"101"},
+{nome:"JULIANO DE SOUSA SILVA",turma:"101"},
+{nome:"KELLY BIANCA DE AMORIM DE AGUIAR",turma:"101"},
+{nome:"LUKAS PIETRO RIBEIRO FERREIRA",turma:"101"},
+{nome:"MARCOS VICTOR CARDOSO NUNES",turma:"101"},
+{nome:"MARIA CLARA DE SOUZA MACHADO",turma:"101"},
+{nome:"MARIA ELOYSA FRANCA SOEIRO",turma:"101"},
+{nome:"MARIA LIVIA SERRA AMORIM",turma:"101"},
+{nome:"MHAYSY ADRIELLY PIRES SANTOS",turma:"101"},
+{nome:"MIGUEL FELIPE DO NASCIMENTO LIMA",turma:"101"},
+{nome:"NICOLAS CORREIA CAVALCANTE VERAS",turma:"101"},
+{nome:"OTAVIO ALEHRANDRO SOARES COSTA",turma:"101"},
+{nome:"PEDRO HENRIQUE ALMEIDA BARROS",turma:"101"},
+{nome:"RIQUELME SILVA CARDOSO",turma:"101"},
+{nome:"VICTOR GABRIEL RODRIGUES DE SOUSA",turma:"101"},
+
+/* =========================
+   TURMA 102
+========================= */
+
+{nome:"ANA KELLY SILVA MELO IRMAO",turma:"102"},
+{nome:"ARTHUR DOS SANTOS DE SOUZA",turma:"102"},
+{nome:"CARLOS EDUARDO VIANA DA CONCEICAO",turma:"102"},
+{nome:"CRISTHYAN RYAN PESSOA BARBOSA",turma:"102"},
+{nome:"DAVI GUTERRES SILVA",turma:"102"},
+{nome:"ELAYNE DE OLIVEIRA DA SILVA",turma:"102"},
+{nome:"ELEN CRISTINA SANTOS PAIVA",turma:"102"},
+{nome:"EMANUELLE RHIANY COELHO RODRIGUES",turma:"102"},
+{nome:"ESTER DE JESUS RODRIGUES DA SILVA",turma:"102"},
+{nome:"GABRIEL DOS ANJOS DINIZ COSTA",turma:"102"},
+{nome:"GLEYCE KELLY MUNIZ COSTA",turma:"102"},
+{nome:"ISIS EDUARDA MENDES LUZ",turma:"102"},
+{nome:"KAIO ITALO OLIVEIRA SILVA",turma:"102"},
+{nome:"KASSIA VICTORIA MORAES FERREIRA",turma:"102"},
+{nome:"KELLY CRISTINA FERREIRA ROXO",turma:"102"},
+{nome:"KEVERSON GABRYELL GOMES SANTOS",turma:"102"},
+{nome:"LARA ISABELA SOUSA SILVA",turma:"102"},
+{nome:"LARISSA MARTINS PINHEIRO",turma:"102"},
+{nome:"LUANA SANTANA LIMA",turma:"102"},
+{nome:"LUIS FELIPE SOARES GARCIA",turma:"102"},
+{nome:"LUIS OTAVIO CARVALHO RODRIGUES",turma:"102"},
+{nome:"PAULO VITOR SILVA DE SOUSA",turma:"102"},
+{nome:"RYAN GABRIEL SILVA LOPES",turma:"102"},
+{nome:"ALEHANY RHYANNA COSTA PIRES",turma:"102"},
+{nome:"DAVI IVAN DOS SANTOS COELHO",turma:"102"},
+{nome:"EMYLLI KARINY COELHO RODRIGUES",turma:"102"},
+{nome:"DAVID MILLER SANTOS COSTA",turma:"102"},
+
+/* =========================
+   TURMA 103
+========================= */
+
+{nome:"ADRIAN SILVA PEREIRA",turma:"103"},
+{nome:"ALLYSON RENNAH RIBEIRO PEREIRA",turma:"103"},
+{nome:"ARTHUR FELIPE MARCELINO DA PAZ",turma:"103"},
+{nome:"BEYJAMYN FRANCK RODRIGUES CARDOSO",turma:"103"},
+{nome:"CAMILA BEATRIZ FERREIRA CAMAPUM",turma:"103"},
+{nome:"EVERTON CUNHA FERREIRA",turma:"103"},
+{nome:"FELIPE SALDANHA SOARES",turma:"103"},
+{nome:"FERNANDA SANTOS DINIZ",turma:"103"},
+{nome:"GREGORIO JOSE OLIVEIRA",turma:"103"},
+{nome:"HELOISE LIMA MARQUES",turma:"103"},
+{nome:"JAMILLY ELLEN PIRES",turma:"103"},
+{nome:"JOAO PEDRO DINIZ LOPES",turma:"103"},
+{nome:"JOAO VITOR FERREIRA RODRIGUES",turma:"103"},
+{nome:"JOVANE LEANDRO FERREIRA DA SILVA",turma:"103"},
+{nome:"KAYLA RANYERE FERREIRA SANTOS",turma:"103"},
+{nome:"LARA CAROLINE SILVA DA CRUZ",turma:"103"},
+{nome:"LAYANNE ANGEL DA SILVA SANTOS",turma:"103"},
+{nome:"LUCAS YURE OLIVEIRA NOGUEIRA",turma:"103"},
+{nome:"LUCIANA DA SILVA GONCALVES",turma:"103"},
+{nome:"MARCIO DANIEL PEREIRA LOPES GONCALVES",turma:"103"},
+{nome:"MARIA GABRIELA CRUZ DA SILVA",turma:"103"},
+{nome:"MAURICIU FERNANDO GUSMAO BARROS",turma:"103"},
+{nome:"RICARDO JONATAS SILVA AGUIAR",turma:"103"},
+{nome:"SORAYA SOARES OLIVEIRA DA SILVA",turma:"103"},
+{nome:"THAYANI GABRYELE BORE PINTO",turma:"103"},
+{nome:"WANDERSON CARLOS FRAZAO OLIVEIRA",turma:"103"},
+{nome:"EVELYN SOPHIA LIMA LOBO",turma:"103"},
+
+/* =========================
+   TURMA 200
+========================= */
+
+{nome:"ANA CLARA FONSECA SOARES",turma:"200"},
+{nome:"ANA VICTORIA TRINDADE MOREIRA",turma:"200"},
+{nome:"ANDREW LUCAS DA SILVA ROCHA",turma:"200"},
+{nome:"CAMILA CLAYNE ATAIDE DE CARVALHO",turma:"200"},
+{nome:"CARLOS DIEGO PEREIRA VIEGAS",turma:"200"},
+{nome:"DANIEL MORAES SA",turma:"200"},
+{nome:"DAVI PAIXAO MUNIZ FERREIRA",turma:"200"},
+{nome:"DAVY TEIXEIRA PINTO",turma:"200"},
+{nome:"ELYAS ROBSON PIMENTA DA SILVA",turma:"200"},
+{nome:"EMILLY DOS SANTOS CARVALHO",turma:"200"},
+{nome:"EMILLY VITORIA DE MORAES",turma:"200"},
+{nome:"EMYLLY THAUANNY DOS SANTOS PESSOA",turma:"200"},
+{nome:"FARLLEY JHONATAN FERREIRA MENDONCA",turma:"200"},
+{nome:"GABRIELLE CUTRIM LINDOSO",turma:"200"},
+{nome:"GLEICY JULIA LIMA DOS SANTOS",turma:"200"},
+{nome:"GUILHERME HENRIQUE MARTINS LOPES",turma:"200"},
+{nome:"IANNY VITORIA BARBOSA BALDEZ",turma:"200"},
+{nome:"ISABELLY FRAZAO SILVA",turma:"200"},
+{nome:"ITALO KAUA FERRAZ ALMEIDA",turma:"200"},
+{nome:"JHENNYFER NATHALIA SANTOS SILVA",turma:"200"},
+{nome:"JOAO VICTOR SERRA MARAMALDO",turma:"200"},
+{nome:"JULIA COSTA BOTENTUIT PIRES",turma:"200"},
+{nome:"KAYLANE EMYLLE DA SILVA SANTOS",turma:"200"},
+{nome:"LAIANE LIMA SOUSA",turma:"200"},
+{nome:"LAYNA VICTORIA FERREIRA LIMA",turma:"200"},
+{nome:"LUAN GABRIEL LIMA CORREIA",turma:"200"},
+{nome:"LUCAS RHYAN BEZERRA BRITO",turma:"200"},
+{nome:"LUNA GABRIELE LIMA CORREIA",turma:"200"},
+{nome:"MARIA CLARA DOS SANTOS ARAUJO",turma:"200"},
+{nome:"MAYSA EDUARDA DAMASCENO BRITO",turma:"200"},
+{nome:"NAUANY CRISTINNI DA SILVA AGUIAR",turma:"200"},
+{nome:"PAULA FERNANDA PONTES SERRA",turma:"200"},
+{nome:"PAULO VITOR GOMES SOARES",turma:"200"},
+{nome:"RAFAELA VITORIA NASCIMENTO ALMEIDA",turma:"200"},
+{nome:"RAFAELI COSTA DA SILVA",turma:"200"},
+
+/* =========================
+   TURMA 201
+========================= */
+
+{nome:"ADAILTON CONCEICAO SOARES FILHO",turma:"201"},
+{nome:"ADRIANO OLIVEIRA DA SILVA",turma:"201"},
+{nome:"ANA RAQUEL MAIA RODRIGUES",turma:"201"},
+{nome:"ANDERSON KAIC COSTA COIMBRA",turma:"201"},
+{nome:"ARTHUR LUCAS SERRA AMORIM",turma:"201"},
+{nome:"BRUNA LUIZA DOS SANTOS DA SILVA",turma:"201"},
+{nome:"CAIO ROBERTO WOLFF PRIVADO",turma:"201"},
+{nome:"CAMILA RAQUEL MELO MONTEIRO",turma:"201"},
+{nome:"CARLA CRISTINA ROCHA MELO",turma:"201"},
+{nome:"CARLOS LEANDRO NUNES FERREIRA",turma:"201"},
+{nome:"DAVID DE SOUZA LOPES",turma:"201"},
+{nome:"GUILHERME EDUARDO CUTRIM LINDOSO",turma:"201"},
+{nome:"IANNA RAFAELA SOUZA DOS SANTOS",turma:"201"},
+{nome:"ISABEL DE ALENCAR MALVAO",turma:"201"},
+{nome:"IVANIELE DA SILVA SOUSA",turma:"201"},
+{nome:"JOAO GUILHERME ABRAAO DE SOUSA",turma:"201"},
+{nome:"JOAO GUILHERME MORAIS SILVA",turma:"201"},
+{nome:"JOAO VICTOR BEZERRA DA SILVA",turma:"201"},
+{nome:"LUCAS GABRIEL SANTOS DE MELLO",turma:"201"},
+{nome:"MARIA EDUARDA BEZERRA SALVIANO DE OLIVEIRA",turma:"201"},
+{nome:"MARIA ESTER MARTINS DE LIMA",turma:"201"},
+{nome:"MATIAS NATHAN SEREJO JAIME",turma:"201"},
+{nome:"MELISSA EMILY COSTA DA SILVA",turma:"201"},
+{nome:"NAOMY CECILLIA ALVES DE SOUSA",turma:"201"},
+{nome:"PAULA BEATRIZ FERREIRA DOS SANTOS",turma:"201"},
+{nome:"PEDRO LUCAS COSTA GONCALVES",turma:"201"},
+{nome:"RHAYNARA RAQUEL MOTA DE MATOS",turma:"201"},
+{nome:"RICHARD MONROE COLARES",turma:"201"},
+{nome:"RYAN RIQUELME SOUZA LEMOS CONCEICAO",turma:"201"},
+{nome:"SARAH CRISTHINI OLIVEIRA MONSORES BORGES",turma:"201"},
+{nome:"SIMON CESAR ARAUJO SILVA LIMA",turma:"201"},
+{nome:"SOPHIA TAINA GOMES DIAS SOARES",turma:"201"},
+{nome:"SOPHYA BEATRIZ AZEVEDO BORGES",turma:"201"},
+{nome:"YASMIN STEFHANY SEREJO DA SILVA",turma:"201"},
+
+/* =========================
+   TURMA 202
+========================= */
+
+{nome:"ANA CLARA GOIABEIRA DOS ANJOS",turma:"202"},
+{nome:"ANA FLAVIA FERREIRA DINIZ",turma:"202"},
+{nome:"ANNE GRAZIELLE CARDOSO ROCHA",turma:"202"},
+{nome:"BRENDA LORRANE DE JESUS NUNES",turma:"202"},
+{nome:"CAROLYNE MOREIRA CALDAS",turma:"202"},
+{nome:"DAVID DOS ANJOS SERPA",turma:"202"},
+{nome:"DEBORA FERNANDA SOUSA SILVA",turma:"202"},
+{nome:"EMANUELE VICTORIA PIEDADE MENEZES",turma:"202"},
+{nome:"ENDREW DLUCAS SANTOS NERY",turma:"202"},
+{nome:"GABRIEL HENRIQUE DA SILVA QUADROS AIRES",turma:"202"},
+{nome:"JULLYANA CELIANE CORREIA NUNES",turma:"202"},
+{nome:"KRUAN RODRIGUES GOMES",turma:"202"},
+{nome:"LEONARDO NASCIMENTO BEZERRA",turma:"202"},
+{nome:"LETICIA MENDES COSTA",turma:"202"},
+{nome:"LUCIANO SILVA CARDOSO",turma:"202"},
+{nome:"LUIS GUSTAVO SANTOS GARCES",turma:"202"},
+{nome:"SARAH REBECA DANTAS BARROS",turma:"202"},
+{nome:"THALITA KETHELYN SOUSA BATISTA",turma:"202"},
+{nome:"THAYLA IZABEL OLIVEIRA RAMOS",turma:"202"},
+{nome:"THOMAS ALEJANDRO PEREIRA SANTOS",turma:"202"},
+{nome:"ULISSES HEITOR MARQUES FONTINELE",turma:"202"},
+{nome:"WELITON FILHO MACIEL DE OLIVEIRA",turma:"202"},
+{nome:"YARA CRISTINA GOMES DOS SANTOS",turma:"202"},
+{nome:"YARA ISABELLE DE SOUZA MACHADO",turma:"202"},
+{nome:"YONARA NASCIMENTO NEVES DE FRANCA",turma:"202"},
+
+/* =========================
+   TURMA 300
+========================= */
+
+{nome:"ANA CAROLINA LOPES DA SILVA",turma:"300"},
+{nome:"CAIO NICOLAS FONSECA MIRANDA",turma:"300"},
+{nome:"DANIELY CRISTINA SILVA DE ALMEIDA",turma:"300"},
+{nome:"DEBORA SOFIA MARTINS LOPES",turma:"300"},
+{nome:"EMANUELE DOS SANTOS CARVALHO",turma:"300"},
+{nome:"EMELY MACHADO DE JESUS",turma:"300"},
+{nome:"ERIK KAUAN ALMEIDA OLIVEIRA",turma:"300"},
+{nome:"EVILLY REGINA BARBOSA ALMEIDA",turma:"300"},
+{nome:"FLAVIA RODRIGUES DE OLIVEIRA",turma:"300"},
+{nome:"GABRYELLA FRANCISCA SOUSA SILVA",turma:"300"},
+{nome:"GUSTAVO CARVALHO HENRIQUE",turma:"300"},
+{nome:"GUSTAVO HENRIQUE OLIVEIRA POLARY",turma:"300"},
+{nome:"INGRID MARE SANTOS DE SOUSA",turma:"300"},
+{nome:"JAIANE DA COSTA FERREIRA",turma:"300"},
+{nome:"JEFFERSON AUGUSTO VIEIRA DE OLIVEIRA",turma:"300"},
+{nome:"JHEMILLY VITORIA SOARES GARCIA",turma:"300"},
+{nome:"KAREN FERNANDA VEIGA HENRIQUE",turma:"300"},
+{nome:"KEMILLY VITORIA ARAUJO SOUSA LIMA",turma:"300"},
+{nome:"KRISTIAN DE OLIVEIRA SOUZA",turma:"300"},
+{nome:"LARA REBECA MELO NEVES",turma:"300"},
+{nome:"LINDA AGATHA DA SILVA E SILVA",turma:"300"},
+{nome:"LUIS MURILO VIANA FREIRE",turma:"300"},
+{nome:"MARCOS VINICIUS BOAVIDA LIMA",turma:"300"},
+{nome:"MARIA EDUARDA FERREIRA OLIVEIRA",turma:"300"},
+{nome:"MICHELE PEREIRA",turma:"300"},
+{nome:"NAYLA DA COSTA MATIAS",turma:"300"},
+{nome:"PEDRO LUCAS SILVA DOS SANTOS",turma:"300"},
+{nome:"RHIAN ICARO SOUSA MONTELES",turma:"300"},
+{nome:"SAMUEL MURILO CANTANHEDE FERNANDO",turma:"300"},
+{nome:"TASSYA EMANUELLE DOS SANTOS ROCHA",turma:"300"},
+{nome:"THALLYSON RUAN COSTA OLIVEIRA",turma:"300"},
+{nome:"THARCYO CLEYLTON BARROS RODRIGUES",turma:"300"},
+{nome:"YURI DAVS FARIAS CORREA",turma:"300"},
+
+/* =========================
+   TURMA 301
+========================= */
+
+{nome:"ALAN PEREIRA PAOSINHO SILVA",turma:"301"},
+{nome:"ANNA CRISTINA DAS NEVES CARVALHO",turma:"301"},
+{nome:"ANTONIA VICTORIA RIBEIRO FERREIRA",turma:"301"},
+{nome:"CHRISTIANO HERBET COSTA CARVALHO",turma:"301"},
+{nome:"CLEILTON FONSECA ALCANTARA FILHO",turma:"301"},
+{nome:"ERQUISON GABRIEL CANTANHEDE DA SILVA",turma:"301"},
+{nome:"GUILHERME MOREIRA BATISTA",turma:"301"},
+{nome:"GUSTAVO OLIVEIRA RABELO",turma:"301"},
+{nome:"GUYLLHERME RYCKELMY REIS MATOS",turma:"301"},
+{nome:"ITALO IAM CAMARA AMARAL",turma:"301"},
+{nome:"JOAO ALBERICO COSTA DE AMORIM",turma:"301"},
+{nome:"JOAO VITOR SILVA DE MORAES CAMARA",turma:"301"},
+{nome:"JUAN GABRYEL DA SILVA PEREIRA",turma:"301"},
+{nome:"KAYO VITOR FURTADO VELOSO",turma:"301"},
+{nome:"LUCAS ABRAAO CHAVES DIAS BORGES",turma:"301"},
+{nome:"NATHAN BRIAN CARNEIRO OLIVEIRA",turma:"301"},
+{nome:"PEDRO LUCAS LOPES SOUSA",turma:"301"},
+{nome:"RAIMUNDO NONATO PROTAZIO SOUSA SOBRINHO",turma:"301"},
+{nome:"RICARDO RAFAEL OLIVEIRA BRITO",turma:"301"},
+{nome:"SARA LETICIA SILVA DE BRITO",turma:"301"},
+{nome:"SARAH CHRISTINNY SOUSA MARQUES",turma:"301"},
+{nome:"VITORIA REGIA DA SILVA",turma:"301"},
+{nome:"YANNY KELLY COSTA CARDOSO",turma:"301"},
+{nome:"YTHALLO CESAR RODRIGUES BARROS",turma:"301"},
+
+/* =========================
+   TURMA 302
+========================= */
+
+{nome:"ANA BEATRIZ FERREIRA ALVES",turma:"302"},
+{nome:"BRENO CRISTYAN VIANA DE CASTRO",turma:"302"},
+{nome:"DAVID SILVA BATISTA",turma:"302"},
+{nome:"ELYAQUIM DA SILVA COSTA",turma:"302"},
+{nome:"EMILLY ESTEFANY DOS SANTOS NOGUEIRA",turma:"302"},
+{nome:"EMILLY LAYS SOUSA ROCHA",turma:"302"},
+{nome:"EVYNLLE DANIELE ROCHA LEAL",turma:"302"},
+{nome:"GABRIEL SILVA DA HORA",turma:"302"},
+{nome:"GUILHERME DELGADO DE SOUSA",turma:"302"},
+{nome:"ITAUANNA FERREIRA MARINHO",turma:"302"},
+{nome:"JARLISON OLIVEIRA NICACIO",turma:"302"},
+{nome:"JOAO PEDRO LIMA SALLES",turma:"302"},
+{nome:"JOAO VICTOR BOAVIDA LIMA",turma:"302"},
+{nome:"LEANDRO DE SOUZA ALENCAR",turma:"302"},
+{nome:"MARINA SILVA CORREA",turma:"302"},
+{nome:"MATHEUS SILVA BEZERRA",turma:"302"},
+{nome:"OTAVIO VICTOR NEVES MARQUES",turma:"302"},
+{nome:"RAYLAN VITOR FARIAS MOREIRA",turma:"302"},
+{nome:"SABRINA FERREIRA DA SILVA",turma:"302"},
+{nome:"SILVANE DA CONCEICAO SANTOS",turma:"302"},
+{nome:"TEONES DOS SANTOS FONSECA JUNIOR",turma:"302"},
+{nome:"YASMIN JAINE FARIAS DINIZ",turma:"302"}
+
+];
+
+
+/* =========================
+   ELEMENTOS
+========================= */
+
+const lista = document.getElementById("listaAlunos");
+const pesquisa = document.getElementById("pesquisa");
+const turma = document.getElementById("turma");
+const data = document.getElementById("data");
+
+const total = document.getElementById("total");
+const presentes = document.getElementById("presentes");
+const faltas = document.getElementById("faltas");
+
+const dataExibida = document.getElementById("dataExibida");
+
+let frequencias = {};
+
+
+/* =========================
+   DATA ATUAL
+========================= */
+
+const hoje = new Date();
+
+data.value =
+    hoje.getFullYear() +
+    "-" +
+    String(hoje.getMonth() + 1).padStart(2,"0") +
+    "-" +
+    String(hoje.getDate()).padStart(2,"0");
+
+
+/* =========================
+   CARREGAR FREQUÊNCIAS
+========================= */
+
+const dadosSalvos =
+    localStorage.getItem("frequenciasPeDeMeia");
+
+if (dadosSalvos) {
+
+    try {
+        frequencias = JSON.parse(dadosSalvos);
+    } catch {
+        frequencias = {};
+    }
+
+}
+
+
+/* =========================
+   MOSTRAR ALUNOS
+========================= */
+
+function mostrarAlunos() {
+
+    lista.innerHTML = "";
+
+    const texto =
+        pesquisa.value.toLowerCase().trim();
+
+    const turmaSelecionada =
+        turma.value;
+
+    const filtrados =
+        alunos.filter(aluno => {
+
+            const nomeOK =
+                aluno.nome
+                .toLowerCase()
+                .includes(texto);
+
+            const turmaOK =
+                turmaSelecionada === "todas" ||
+                aluno.turma === turmaSelecionada;
+
+            return nomeOK && turmaOK;
+
+        });
+
+
+    filtrados.forEach((aluno,index) => {
+
+        const chave =
+            aluno.turma +
+            "_" +
+            aluno.nome +
+            "_" +
+            data.value;
+
+        const status =
+            frequencias[chave] || "pendente";
+
+
+        let textoStatus =
+            "Não registrado";
+
+        if (status === "presente") {
+            textoStatus = "Presente";
+        }
+
+        if (status === "falta") {
+            textoStatus = "Falta";
+        }
+
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td class="numero">
+                ${index + 1}
+            </td>
+
+            <td class="nome-aluno">
+                ${aluno.nome}
+            </td>
+
+            <td class="turma">
+                ${aluno.turma}
+            </td>
+
+            <td>
+                <span class="status-atual ${status}">
+                    ${textoStatus}
+                </span>
+            </td>
+
+            <td>
+
+                <div class="acoes-frequencia">
+
+                    <button
+                        class="btn-status btn-presente
+                        ${status === "presente" ? "ativo" : ""}"
+                        onclick="marcarFrequencia(
+                            '${aluno.turma}',
+                            '${aluno.nome}',
+                            'presente'
+                        )">
+
+                        ✓ PRESENTE
+
+                    </button>
+
+
+                    <button
+                        class="btn-status btn-falta
+                        ${status === "falta" ? "ativo" : ""}"
+                        onclick="marcarFrequencia(
+                            '${aluno.turma}',
+                            '${aluno.nome}',
+                            'falta'
+                        )">
+
+                        ✕ FALTA
+
+                    </button>
+
+                </div>
+
+            </td>
+
+        `;
+
+        lista.appendChild(tr);
+
+    });
+
+
+    atualizarResumo();
+    atualizarData();
+
+}
+
+
+/* =========================
+   MARCAR FREQUÊNCIA
+========================= */
+
+function marcarFrequencia(
+    turmaAluno,
+    nomeAluno,
+    status
+) {
+
+    const chave =
+        turmaAluno +
+        "_" +
+        nomeAluno +
+        "_" +
+        data.value;
+
+    frequencias[chave] =
+        status;
+
+    localStorage.setItem(
+        "frequenciasPeDeMeia",
+        JSON.stringify(frequencias)
+    );
+
+    mostrarAlunos();
+
+}
+
+
+/* =========================
+   RESUMO
+========================= */
+
+function atualizarResumo() {
+
+    const texto =
+        pesquisa.value.toLowerCase().trim();
+
+    const turmaSelecionada =
+        turma.value;
+
+
+    const filtrados =
+        alunos.filter(aluno => {
+
+            const nomeOK =
+                aluno.nome
+                .toLowerCase()
+                .includes(texto);
+
+            const turmaOK =
+                turmaSelecionada === "todas" ||
+                aluno.turma === turmaSelecionada;
+
+            return nomeOK && turmaOK;
+
+        });
+
+
+    let totalPresentes = 0;
+    let totalFaltas = 0;
+
+
+    filtrados.forEach(aluno => {
+
+        const chave =
+            aluno.turma +
+            "_" +
+            aluno.nome +
+            "_" +
+            data.value;
+
+        if (frequencias[chave] === "presente") {
+            totalPresentes++;
+        }
+
+        if (frequencias[chave] === "falta") {
+            totalFaltas++;
+        }
+
+    });
+
+
+    total.textContent =
+        filtrados.length;
+
+    presentes.textContent =
+        totalPresentes;
+
+    faltas.textContent =
+        totalFaltas;
+
+}
+
+
+/* =========================
+   DATA NA TELA
+========================= */
+
+function atualizarData() {
+
+    if (!data.value) {
+
+        dataExibida.textContent =
+            "Frequência do dia";
+
+        return;
+    }
+
+
+    const partes =
+        data.value.split("-");
+
+
+    dataExibida.textContent =
+        "Frequência: " +
+        partes[2] +
+        "/" +
+        partes[1] +
+        "/" +
+        partes[0];
+
+}
+
+
+/* =========================
+   SALVAR
+========================= */
+
+function salvarFrequencia() {
+
+    localStorage.setItem(
+        "frequenciasPeDeMeia",
+        JSON.stringify(frequencias)
+    );
+
+
+    mostrarMensagem(
+        "✓ Frequência salva com sucesso!"
+    );
+
+}
+
+
+/* =========================
+   MENSAGEM
+========================= */
+
+function mostrarMensagem(texto) {
+
+    const mensagem =
+        document.getElementById("mensagem");
+
+    mensagem.textContent =
+        texto;
+
+    mensagem.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        mensagem.style.display =
+            "none";
+
+    },2500);
+
+}
+
+
+/* =========================
+   EVENTOS
+========================= */
+
+pesquisa.addEventListener(
+    "input",
+    mostrarAlunos
+);
+
+turma.addEventListener(
+    "change",
+    mostrarAlunos
+);
+
+data.addEventListener(
+    "change",
+    mostrarAlunos
+);
+
+
+/* =========================
+   INICIAR
+========================= */
+
+mostrarAlunos();
+
+</script>
+
+</body>
+</html>

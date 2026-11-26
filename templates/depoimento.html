@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pé de Meia - Depoimentos</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(0, 100, 190, 0.45),
+                    rgba(0, 80, 170, 0.68)
+                ),
+                url("tela pe de meisa.jpg") center/cover fixed no-repeat;
+
+            color: white;
+        }
+
+        /* =========================
+           NAVEGAÇÃO
+        ========================= */
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            padding: 22px 6%;
+
+            z-index: 100;
+        }
+
+        .navbar {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            border-radius: 50%;
+
+            font-size: 23px;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 11px 18px;
+
+            border-radius: 25px;
+
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .menu .depoimentos {
+            background: white;
+            color: #0757c9;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .usuario {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            border-radius: 50%;
+
+            text-decoration: none;
+            font-size: 21px;
+
+            transition: 0.3s;
+        }
+
+        .usuario:hover {
+            transform: scale(1.08);
+        }
+
+        /* =========================
+           CONTEÚDO
+        ========================= */
+
+        main {
+            min-height: 100vh;
+
+            padding: 140px 7% 70px;
+        }
+
+        .titulo {
+            text-align: center;
+
+            max-width: 750px;
+
+            margin: 0 auto 45px;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 8px 18px;
+            margin-bottom: 18px;
+
+            border: 1px solid rgba(255, 255, 255, 0.4);
+
+            background: rgba(255, 255, 255, 0.15);
+
+            border-radius: 30px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            backdrop-filter: blur(6px);
+        }
+
+        h1 {
+            font-size: clamp(38px, 5vw, 58px);
+
+            margin-bottom: 15px;
+        }
+
+        .titulo p {
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* =========================
+           DEPOIMENTOS
+        ========================= */
+
+        .depoimentos-container {
+            max-width: 1200px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .depoimento {
+            position: relative;
+
+            padding: 30px;
+
+            min-height: 285px;
+
+            background:
+                rgba(255, 255, 255, 0.15);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius: 25px;
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.15);
+
+            transition: 0.3s;
+        }
+
+        .depoimento:hover {
+            transform: translateY(-8px);
+
+            background:
+                rgba(255, 255, 255, 0.22);
+        }
+
+        /* =========================
+           PERFIL
+        ========================= */
+
+        .perfil {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin-bottom: 22px;
+        }
+
+        .foto {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: white;
+
+            color: #0757c9;
+
+            font-size: 25px;
+
+            flex-shrink: 0;
+        }
+
+        .dados h2 {
+            font-size: 17px;
+
+            margin-bottom: 4px;
+        }
+
+        .dados span {
+            font-size: 12px;
+
+            color:
+                rgba(255, 255, 255, 0.75);
+        }
+
+        /* =========================
+           ESTRELAS
+        ========================= */
+
+        .estrelas {
+            color: #ffe15b;
+
+            font-size: 18px;
+
+            margin-bottom: 15px;
+
+            letter-spacing: 2px;
+        }
+
+        /* =========================
+           TEXTO
+        ========================= */
+
+        .depoimento p {
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            color:
+                rgba(255, 255, 255, 0.9);
+        }
+
+        .aspas {
+            position: absolute;
+
+            right: 25px;
+            top: 20px;
+
+            font-size: 45px;
+
+            color:
+                rgba(255, 255, 255, 0.15);
+
+            font-weight: bold;
+        }
+
+        /* =========================
+           FRASE FINAL
+        ========================= */
+
+        .frase-final {
+            max-width: 800px;
+
+            margin: 45px auto 0;
+
+            padding: 25px;
+
+            text-align: center;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.2);
+
+            border-radius: 20px;
+
+            backdrop-filter: blur(8px);
+        }
+
+        .frase-final p {
+            font-size: 15px;
+
+            line-height: 1.6;
+
+            color:
+                rgba(255, 255, 255, 0.9);
+        }
+
+        /* =========================
+           BOTÃO
+        ========================= */
+
+        .voltar {
+            display: block;
+
+            width: 180px;
+
+            margin: 35px auto 0;
+
+            padding: 13px 20px;
+
+            background: white;
+
+            color: #0757c9;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            border-radius: 30px;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 7px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .voltar:hover {
+            transform: translateY(-3px);
+        }
+
+        /* =========================
+           RODAPÉ
+        ========================= */
+
+        .rodape {
+            margin-top: 40px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            color:
+                rgba(255, 255, 255, 0.7);
+        }
+
+        /* =========================
+           RESPONSIVIDADE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .depoimentos-container {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            header {
+                padding: 18px 4%;
+            }
+
+            .logo strong {
+                display: none;
+            }
+
+            .menu {
+                gap: 2px;
+            }
+
+            .menu a {
+                padding: 9px 10px;
+
+                font-size: 11px;
+            }
+
+            .usuario {
+                width: 40px;
+                height: 40px;
+
+                font-size: 18px;
+            }
+
+            main {
+                padding:
+                    120px 6% 50px;
+            }
+
+            .depoimentos-container {
+                grid-template-columns: 1fr;
+            }
+
+            .depoimento {
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .menu a:nth-child(2),
+            .menu a:nth-child(4) {
+                display: none;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            .titulo p {
+                font-size: 15px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVEGAÇÃO
+    ========================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="entrar.html" class="logo">
+
+                <span>🎓</span>
+
+                <strong>
+                    Pé de Meia
+                </strong>
+
+            </a>
+
+
+            <div class="menu">
+
+                <a href="entrar.html">
+                    INÍCIO
+                </a>
+
+                <a href="servicos.html">
+                    SERVIÇOS
+                </a>
+
+                <a
+                    href="depoimento.html"
+                    class="depoimentos">
+
+                    DEPOIMENTOS
+
+                </a>
+
+                <a href="contato.html">
+                    CONTATO
+                </a>
+
+            </div>
+
+
+            <a
+                href="perfil.html"
+                class="usuario"
+                title="Perfil">
+
+                👤
+
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         CONTEÚDO
+    ========================== -->
+
+    <main>
+
+        <section class="titulo">
+
+            <div class="tag">
+                EXPERIÊNCIAS
+            </div>
+
+            <h1>
+                O que dizem sobre nós
+            </h1>
+
+            <p>
+                Confira a experiência de alunos e professores
+                que utilizam o Pé de Meia para acompanhar
+                a vida escolar de forma mais simples.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             DEPOIMENTOS
+        ========================== -->
+
+        <section class="depoimentos-container">
+
+
+            <!-- 1 -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👨‍🎓
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            JOAO PEDRO DINIZ LOPES
+                        </h2>
+
+                        <span>
+                            Aluno - Turma 103
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★★
+                </div>
+
+                <p>
+                    “O Pé de Meia me ajuda a acompanhar minhas
+                    notas e faltas. É fácil de usar e consigo
+                    consultar minhas informações rapidamente.”
+                </p>
+
+            </article>
+
+
+            <!-- 2 -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👩‍🎓
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            MARIA EDUARDA FERREIRA OLIVEIRA
+                        </h2>
+
+                        <span>
+                            Aluna - Turma 300
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★★
+                </div>
+
+                <p>
+                    “Consigo acompanhar meu desempenho de forma
+                    rápida e simples. Isso me ajuda a perceber
+                    quais matérias precisam de mais atenção.”
+                </p>
+
+            </article>
+
+
+            <!-- 3 -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👨‍🎓
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            LUCAS GABRIEL SANTOS DE MELLO
+                        </h2>
+
+                        <span>
+                            Aluno - Turma 201
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★★
+                </div>
+
+                <p>
+                    “A plataforma facilita bastante. Consigo ver
+                    minhas informações escolares e acompanhar
+                    meu progresso em um só lugar.”
+                </p>
+
+            </article>
+
+
+            <!-- 4 -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👩‍🎓
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            ANA BEATRIZ FERREIRA ALVES
+                        </h2>
+
+                        <span>
+                            Aluna - Turma 302
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★☆
+                </div>
+
+                <p>
+                    “É muito prático acompanhar minhas atividades
+                    escolares. Consigo consultar minhas informações
+                    de maneira organizada.”
+                </p>
+
+            </article>
+
+
+            <!-- 5 -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👨‍🎓
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            GABRIEL DOS ANJOS DINIZ COSTA
+                        </h2>
+
+                        <span>
+                            Aluno - Turma 102
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★★
+                </div>
+
+                <p>
+                    “Gosto do Pé de Meia porque consigo consultar
+                    minhas informações escolares e saber quais
+                    matérias precisam de mais atenção.”
+                </p>
+
+            </article>
+
+
+            <!-- 6 -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👩‍🎓
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            YANNY KELLY COSTA CARDOSO
+                        </h2>
+
+                        <span>
+                            Aluna - Turma 301
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★★
+                </div>
+
+                <p>
+                    “Acompanhar minha frequência e meu desempenho
+                    ficou mais fácil. As informações ficam reunidas
+                    e posso consultar quando precisar.”
+                </p>
+
+            </article>
+
+
+            <!-- 7 -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👨‍🎓
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            CHRISTIANO HERBET COSTA CARVALHO
+                        </h2>
+
+                        <span>
+                            Aluno - Turma 301
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★★
+                </div>
+
+                <p>
+                    “A plataforma facilita o acompanhamento
+                    das atividades escolares e ajuda o aluno
+                    a ficar mais informado sobre sua rotina.”
+                </p>
+
+            </article>
+
+
+            <!-- 8 -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👨‍🎓
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            NATHAN BRIAN CARNEIRO OLIVEIRA
+                        </h2>
+
+                        <span>
+                            Aluno - Turma 301
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★☆
+                </div>
+
+                <p>
+                    “O sistema ajuda a visualizar minhas notas
+                    e minha frequência. Assim consigo saber
+                    onde preciso melhorar durante o ano.”
+                </p>
+
+            </article>
+
+
+            <!-- 9 - PROFESSORA SOLANGE -->
+
+            <article class="depoimento">
+
+                <div class="aspas">
+                    “
+                </div>
+
+                <div class="perfil">
+
+                    <div class="foto">
+                        👩‍🏫
+                    </div>
+
+                    <div class="dados">
+
+                        <h2>
+                            Professora Solange
+                        </h2>
+
+                        <span>
+                            Professora
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="estrelas">
+                    ★★★★★
+                </div>
+
+                <p>
+                    “O Pé de Meia aproxima a família da escola
+                    e facilita o acompanhamento dos alunos.
+                    É uma ferramenta que ajuda a tornar o processo
+                    educacional mais organizado e transparente.”
+                </p>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- =========================
+             FRASE FINAL
+        ========================== -->
+
+        <section class="frase-final">
+
+            <p>
+                O objetivo do Pé de Meia é tornar o acompanhamento
+                escolar mais simples, acessível e próximo dos alunos,
+                responsáveis e escola.
+            </p>
+
+        </section>
+
+
+        <a
+            href="entrar.html"
+            class="voltar">
+
+            ← Voltar ao início
+
+        </a>
+
+
+        <div class="rodape">
+
+            © 2026 Pé de Meia — Acompanhamento Escolar
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

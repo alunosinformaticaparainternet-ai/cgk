@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pé de Meia - Cadastro</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #087bd9, #05a9ef);
+            padding: 20px;
+        }
+
+        .container {
+            width: 900px;
+            min-height: 550px;
+            background: white;
+            border-radius: 25px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        /* LADO AZUL */
+        .lado-esquerdo {
+            width: 50%;
+            background: linear-gradient(160deg, #0757c9, #079be8);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .logo {
+            width: 130px;
+            height: 130px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+        }
+
+        .logo span {
+            font-size: 58px;
+        }
+
+        .lado-esquerdo h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .lado-esquerdo p {
+            font-size: 17px;
+            line-height: 1.5;
+            max-width: 340px;
+        }
+
+        /* LADO DO CADASTRO */
+        .lado-direito {
+            width: 50%;
+            padding: 45px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .lado-direito h2 {
+            color: #0757c9;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitulo {
+            color: #777;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .campo {
+            margin-bottom: 17px;
+        }
+
+        .campo label {
+            display: block;
+            color: #222;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .campo input {
+            width: 100%;
+            height: 48px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+            padding: 0 15px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .campo input:focus {
+            border-color: #0757c9;
+            box-shadow: 0 0 5px rgba(7, 87, 201, 0.20);
+        }
+
+        /* BOTÃO */
+        .botao {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 10px;
+            background: #0757c9;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background: #00439c;
+        }
+
+        /* MENSAGEM */
+        #mensagem {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        /* LOGIN */
+        .login {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .login a {
+            color: #0757c9;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login a:hover {
+            text-decoration: underline;
+        }
+
+        /* CELULAR */
+        @media (max-width: 750px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .lado-esquerdo,
+            .lado-direito {
+                width: 100%;
+            }
+
+            .lado-esquerdo {
+                min-height: 280px;
+                padding: 30px;
+            }
+
+            .logo {
+                width: 90px;
+                height: 90px;
+            }
+
+            .logo span {
+                font-size: 40px;
+            }
+
+            .lado-esquerdo h1 {
+                font-size: 32px;
+            }
+
+            .lado-direito {
+                padding: 35px 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LADO ESQUERDO -->
+        <div class="lado-esquerdo">
+
+            <div class="logo">
+                <span>🎓</span>
+            </div>
+
+            <h1>Pé de Meia</h1>
+
+            <p>
+                Crie sua conta para acompanhar
+                suas informações escolares de
+                forma simples e rápida.
+            </p>
+
+        </div>
+
+
+        <!-- LADO DIREITO -->
+        <div class="lado-direito">
+
+            <h2>Crie sua conta</h2>
+
+            <p class="subtitulo">
+                Preencha seus dados para realizar o cadastro.
+            </p>
+
+
+            <form id="formCadastro">
+
+                <!-- NOME -->
+                <div class="campo">
+
+                    <label for="nome">
+                        Nome completo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        placeholder="Digite seu nome completo"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CPF -->
+                <div class="campo">
+
+                    <label for="cpf">
+                        CPF
+                    </label>
+
+                    <input
+                        type="text"
+                        id="cpf"
+                        placeholder="000.000.000-00"
+                        maxlength="14"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DATA DE NASCIMENTO -->
+                <div class="campo">
+
+                    <label for="nascimento">
+                        Data de nascimento
+                    </label>
+
+                    <input
+                        type="date"
+                        id="nascimento"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BOTÃO -->
+                <button
+                    type="submit"
+                    class="botao"
+                >
+                    CADASTRAR
+                </button>
+
+
+                <!-- MENSAGEM -->
+                <div id="mensagem"></div>
+
+            </form>
+
+
+            <!-- VOLTAR PARA LOGIN -->
+            <p class="login">
+
+                Já possui uma conta?
+
+                <a href="entrar.html">
+                    Entrar
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // ==========================================
+        // MÁSCARA DO CPF
+        // ==========================================
+
+        const cpf = document.getElementById("cpf");
+
+        cpf.addEventListener("input", function () {
+
+            let valor = cpf.value.replace(/\D/g, "");
+
+            if (valor.length > 11) {
+                valor = valor.substring(0, 11);
+            }
+
+            if (valor.length > 9) {
+
+                valor = valor.replace(
+                    /^(\d{3})(\d{3})(\d{3})(\d{1,2}).*/,
+                    "$1.$2.$3-$4"
+                );
+
+            } else if (valor.length > 6) {
+
+                valor = valor.replace(
+                    /^(\d{3})(\d{3})(\d{1,3}).*/,
+                    "$1.$2.$3"
+                );
+
+            } else if (valor.length > 3) {
+
+                valor = valor.replace(
+                    /^(\d{3})(\d{1,3}).*/,
+                    "$1.$2"
+                );
+
+            }
+
+            cpf.value = valor;
+
+        });
+
+
+        // ==========================================
+        // CADASTRO
+        // ==========================================
+
+        const formCadastro =
+            document.getElementById("formCadastro");
+
+        const mensagem =
+            document.getElementById("mensagem");
+
+
+        formCadastro.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+
+            const nome =
+                document.getElementById("nome").value.trim();
+
+            const cpfValor =
+                document.getElementById("cpf").value.trim();
+
+            const nascimento =
+                document.getElementById("nascimento").value;
+
+
+            // VERIFICAR CPF
+            const numerosCPF =
+                cpfValor.replace(/\D/g, "");
+
+
+            if (numerosCPF.length !== 11) {
+
+                mensagem.style.color = "red";
+
+                mensagem.textContent =
+                    "Digite um CPF válido.";
+
+                return;
+            }
+
+
+            // VERIFICAR DATA
+            if (!nascimento) {
+
+                mensagem.style.color = "red";
+
+                mensagem.textContent =
+                    "Informe sua data de nascimento.";
+
+                return;
+            }
+
+
+            // CADASTRO REALIZADO
+            mensagem.style.color = "green";
+
+            mensagem.textContent =
+                "Cadastro realizado com sucesso!";
+
+
+            // IR PARA O LOGIN
+            setTimeout(function () {
+
+                window.location.href = "entrar.html";
+
+            }, 1500);
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+

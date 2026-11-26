@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pé de Meia - Contato</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(0, 100, 190, 0.45),
+                rgba(0, 80, 170, 0.68)),
+                url("tela pe de meisa.jpg") center/cover fixed no-repeat;
+            color: white;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 22px 6%;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 50%;
+            font-size: 23px;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 11px 18px;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            background: rgba(255,255,255,0.18);
+        }
+
+        .menu .contato {
+            background: white;
+            color: #0757c9;
+        }
+
+        .usuario {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 21px;
+        }
+
+        main {
+            min-height: 100vh;
+            padding: 135px 7% 60px;
+        }
+
+        .titulo {
+            max-width: 700px;
+            margin-bottom: 38px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 18px;
+            margin-bottom: 17px;
+            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.15);
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: clamp(38px, 5vw, 58px);
+            margin-bottom: 15px;
+        }
+
+        .titulo p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .contato-container {
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 25px;
+        }
+
+        .informacoes {
+            padding: 30px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .informacoes h2 {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .informacoes > p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.82);
+            margin-bottom: 28px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .info-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 14px;
+            font-size: 21px;
+        }
+
+        .info-text strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .info-text span {
+            font-size: 13px;
+            color: rgba(255,255,255,0.78);
+        }
+
+        .whatsapp-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px;
+            padding: 14px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .whatsapp-link:hover {
+            background: #1da851;
+            transform: translateY(-2px);
+        }
+
+        .formulario {
+            padding: 30px;
+            background: rgba(255,255,255,0.96);
+            border-radius: 25px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.18);
+            color: #1c1c1c;
+        }
+
+        .formulario h2 {
+            color: #0757c9;
+            font-size: 23px;
+            margin-bottom: 8px;
+        }
+
+        .formulario > p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .campo {
+            margin-bottom: 17px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .campo input,
+        .campo textarea,
+        .campo select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #d8d8d8;
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px;
+            background: #f8f9fb;
+            transition: 0.3s;
+        }
+
+        .campo input:focus,
+        .campo textarea:focus,
+        .campo select:focus {
+            border-color: #087bd9;
+            box-shadow: 0 0 0 3px rgba(8,123,217,0.1);
+            background: white;
+        }
+
+        .campo textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .botao-enviar {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg,#0757c9,#079be8);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .botao-enviar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(7,87,201,0.25);
+        }
+
+        .horario {
+            max-width: 1200px;
+            margin-top: 25px;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.13);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 18px;
+            backdrop-filter: blur(8px);
+        }
+
+        .horario-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 12px;
+            font-size: 20px;
+        }
+
+        .horario strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .horario span {
+            font-size: 12px;
+            color: rgba(255,255,255,0.78);
+        }
+
+        .rodape {
+            margin-top: 35px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        @media (max-width: 900px) {
+            .contato-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+            header {
+                padding: 18px 4%;
+            }
+
+            .logo strong {
+                display: none;
+            }
+
+            .menu {
+                gap: 2px;
+            }
+
+            .menu a {
+                padding: 9px 10px;
+                font-size: 11px;
+            }
+
+            .usuario {
+                width: 40px;
+                height: 40px;
+            }
+
+            main {
+                padding: 120px 6% 50px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .menu a:nth-child(2),
+            .menu a:nth-child(3) {
+                display: none;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            .titulo p {
+                font-size: 15px;
+            }
+
+            .informacoes,
+            .formulario {
+                padding: 23px;
+            }
+
+            .horario {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+
+            <a href="entrar.html" class="logo">
+                <span>🎓</span>
+                <strong>Pé de Meia</strong>
+            </a>
+
+            <div class="menu">
+                <a href="entrar.html">INÍCIO</a>
+                <a href="entrar.html">SERVIÇOS</a>
+                <a href="depoimento.html">DEPOIMENTOS</a>
+                <a href="contato.html" class="contato">CONTATO</a>
+            </div>
+
+            <a href="perfil.html" class="usuario" title="Perfil">👤</a>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="titulo">
+            <div class="tag">FALE CONOSCO</div>
+
+            <h1>Entre em contato</h1>
+
+            <p>
+                Tem alguma dúvida, sugestão ou precisa de ajuda?
+                Envie uma mensagem para nossa equipe. Estamos
+                aqui para ajudar você.
+            </p>
+        </section>
+
+        <section class="contato-container">
+
+            <div class="informacoes">
+
+                <h2>Fale com a equipe</h2>
+
+                <p>
+                    Utilize um dos nossos canais de atendimento
+                    ou envie sua mensagem pelo formulário.
+                </p>
+
+                <div class="info-item">
+                    <div class="info-icon">📧</div>
+                    <div class="info-text">
+                        <strong>E-mail</strong>
+                        <span>contato@pededemeia.com</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">📱</div>
+                    <div class="info-text">
+                        <strong>Telefone</strong>
+                        <span>(98) 99999-0000</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text">
+                        <strong>Localização</strong>
+                        <span>São Luís - Maranhão</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">💬</div>
+                    <div class="info-text">
+                        <strong>Atendimento</strong>
+                        <span>Suporte para alunos e responsáveis</span>
+                    </div>
+                </div>
+
+                <a
+                    href="https://wa.me/98999990000"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="whatsapp-link">
+                    <span>💬</span>
+                    CONVERSAR PELO WHATSAPP
+                </a>
+
+            </div>
+
+            <div class="formulario">
+
+                <h2>Envie uma mensagem</h2>
+
+                <p>
+                    Preencha os campos abaixo e fale conosco.
+                </p>
+
+                <form id="formContato">
+
+                    <div class="campo">
+                        <label for="nome">Nome completo</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            placeholder="Digite seu nome"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="email">E-mail</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Digite seu e-mail"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="assunto">Assunto</label>
+
+                        <select id="assunto" required>
+                            <option value="">Selecione um assunto</option>
+                            <option>Dúvida sobre notas</option>
+                            <option>Dúvida sobre frequência</option>
+                            <option>Problema no sistema</option>
+                            <option>Sugestão</option>
+                            <option>Outro assunto</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="mensagemTexto">Mensagem</label>
+                        <textarea
+                            id="mensagemTexto"
+                            placeholder="Digite sua mensagem..."
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="botao-enviar">
+                        ENVIAR PELO WHATSAPP
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        <section class="horario">
+            <div class="horario-icon">🕐</div>
+
+            <div>
+                <strong>Horário de atendimento</strong>
+                <span>Segunda a sexta-feira • 08:00 às 17:00</span>
+            </div>
+        </section>
+
+        <div class="rodape">
+            © 2026 Pé de Meia — Acompanhamento Escolar
+        </div>
+
+    </main>
+
+    <script>
+
+        // NÚMERO DO WHATSAPP DA EQUIPE
+        // Coloque o código do país (55), DDD e número.
+        const numeroWhatsApp = "98999990000";
+
+        const formulario = document.getElementById("formContato");
+
+        formulario.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const nome = document.getElementById("nome").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const assunto = document.getElementById("assunto").value;
+            const mensagem = document.getElementById("mensagemTexto").value.trim();
+
+            const texto =
+                "Olá! Entrei em contato pelo sistema Pé de Meia.%0A%0A" +
+                "*Nome:* " + encodeURIComponent(nome) + "%0A" +
+                "*E-mail:* " + encodeURIComponent(email) + "%0A" +
+                "*Assunto:* " + encodeURIComponent(assunto) + "%0A" +
+                "*Mensagem:* " + encodeURIComponent(mensagem);
+
+            const link = "https://wa.me/55" + numeroWhatsApp + "?text=" + texto;
+
+            window.open(link, "_blank");
+
+        });
+
+    </script>
+
+</body>
+</html>

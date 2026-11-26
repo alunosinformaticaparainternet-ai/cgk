@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGK Alunos - Ver Notas</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #087bd9;
+            overflow: auto;
+        }
+
+        .fundo {
+            position: fixed;
+            inset: 0;
+            background: url("tela pe de meisa.jpg") center/cover no-repeat;
+            z-index: -1;
+        }
+
+        header {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            background: rgba(8, 123, 217, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .voltar {
+            background: white;
+            color: #087bd9;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        .titulo {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .usuario {
+            width: 40px;
+            height: 40px;
+            background: white;
+            color: #087bd9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1250px;
+            margin: 25px auto;
+            background: rgba(255, 255, 255, .97);
+            border-radius: 22px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+        }
+
+        .cabecalho-pagina {
+            margin-bottom: 25px;
+        }
+
+        .cabecalho-pagina h1 {
+            color: #087bd9;
+            font-size: 30px;
+        }
+
+        .cabecalho-pagina p {
+            color: #666;
+            margin-top: 6px;
+        }
+
+        .filtros {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .filtros input,
+        .filtros select {
+            height: 48px;
+            border: 1px solid #d5d5d5;
+            border-radius: 10px;
+            padding: 0 15px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .filtros input:focus,
+        .filtros select:focus {
+            border-color: #087bd9;
+            box-shadow: 0 0 0 3px rgba(8, 123, 217, .12);
+        }
+
+        .aluno {
+            padding: 20px;
+            background: #f5faff;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid #087bd9;
+        }
+
+        .aluno h2 {
+            color: #087bd9;
+            font-size: 25px;
+        }
+
+        .aluno p {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .situacao {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .situacao.aprovado {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .situacao.recuperacao {
+            background: #fff4cc;
+            color: #b77900;
+        }
+
+        .situacao.reprovado {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .alerta {
+            background: #d62828;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .sucesso {
+            background: #16a34a;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .recuperacao-alerta {
+            background: #d99a00;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .tabela-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #087bd9;
+            color: white;
+            padding: 13px;
+            font-size: 13px;
+        }
+
+        td {
+            text-align: center;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        tr:nth-child(even) {
+            background: #f4f9ff;
+        }
+
+        .aprovado-text {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .reprovado-text {
+            color: #d62828;
+            font-weight: bold;
+        }
+
+        .recuperacao-text {
+            color: #c08400;
+            font-weight: bold;
+        }
+
+        .cards {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 180px;
+            background: #087bd9;
+            color: white;
+            padding: 20px;
+            border-radius: 18px;
+            text-align: center;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .card span {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .separador {
+            margin: 45px 0;
+            border: none;
+            border-top: 2px solid #d8e7f7;
+        }
+
+        .nenhum {
+            text-align: center;
+            padding: 50px 20px;
+            color: #777;
+            display: none;
+        }
+
+        .nenhum h2 {
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .contador {
+            background: #e8f4ff;
+            color: #087bd9;
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+
+            header {
+                padding: 0 15px;
+            }
+
+            .titulo {
+                font-size: 20px;
+            }
+
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .filtros {
+                grid-template-columns: 1fr;
+            }
+
+            .aluno h2 {
+                font-size: 21px;
+            }
+
+            .cards {
+                flex-direction: column;
+            }
+
+            .card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="fundo"></div>
+
+    <header>
+
+        <a href="entrar.html" class="voltar">
+            ← Início
+        </a>
+
+        <div class="titulo">
+            VER NOTAS
+        </div>
+
+        <div class="usuario">
+            👤
+        </div>
+
+    </header>
+
+
+    <div class="container">
+
+        <div class="cabecalho-pagina">
+
+            <h1>Notas dos Alunos</h1>
+
+            <p>
+                Consulte as notas, médias, faltas e situação escolar dos alunos.
+            </p>
+
+        </div>
+
+
+        <div class="filtros">
+
+            <input
+                type="text"
+                id="pesquisa"
+                placeholder="Pesquisar aluno pelo nome..."
+            >
+
+            <select id="filtroTurma">
+
+                <option value="todas">
+                    Todas as turmas
+                </option>
+
+                <option value="100">Turma 100</option>
+                <option value="101">Turma 101</option>
+                <option value="102">Turma 102</option>
+                <option value="103">Turma 103</option>
+                <option value="200">Turma 200</option>
+                <option value="201">Turma 201</option>
+                <option value="202">Turma 202</option>
+                <option value="300">Turma 300</option>
+                <option value="301">Turma 301</option>
+                <option value="302">Turma 302</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="contador" id="contador">
+            0 alunos encontrados
+        </div>
+
+
+        <div id="listaAlunos"></div>
+
+
+        <div class="nenhum" id="nenhum">
+
+            <h2>Nenhum aluno encontrado</h2>
+
+            <p>
+                Verifique o nome pesquisado ou selecione outra turma.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /*
+        ============================================================
+        LISTA DE ALUNOS POR TURMA
+        ============================================================
+        */
+
+        const turmas = {
+
+            "100": [
+                "AGATA SAMINEZ MARQUES",
+                "AMANDA ISABELA DA SILVA ROCHA",
+                "ANA BEATRIZ MELONIO BATISTA",
+                "ANA BEATRIZ SILVA DE SOUSA",
+                "ANA GABRIELA DE LIMA ALVES",
+                "ANA JULLYA PRAZERES DOS SANTOS",
+                "ANA LUIZA MIRANDA PINHEIRO",
+                "BRUNO FERNANDO RODRIGUES FERREIRA",
+                "CARLA CRISTINA DOS ANJOS MACIEL",
+                "DAVI NASCIMENTO VIEIRA",
+                "DEYSE VITORIA MORAES DE BRITO",
+                "EVELLYN GABRIELE BORGES PIRES",
+                "JAMILLY VICTORIA FERREIRA CASTRO",
+                "JOAO LUCAS DE ALMEIDA BRITO",
+                "JOAO LUCAS RIBEIRO VIEIRA",
+                "JOAO VICTOR DINIZ LOPES",
+                "JULIANA GOMES RIBEIRO",
+                "KAMILLY VITORIA MORAES OLIVEIRA DE SOUSA",
+                "KETENLLEN LORRANNY LEITE MATOS",
+                "KILSON BUCAR LIMA NETO",
+                "LARA CRISTINE GOMES TRINDADE",
+                "LINDSEY LORRANNE DE SOUSA SILVA",
+                "LUIS FELIPE COSTA DOS SANTOS",
+                "MARIA CLARA DE SOUZA SILVA",
+                "PEDRO HENRIQUE DIAS SILVA",
+                "SAMIRA RAYARA MORAES DOS SANTOS",
+                "STHEFANE DOURADO DE SOUZA",
+                "VICTOR HUGO ANUNCIACAO DIAS",
+                "VITORIA EMILY OLIVEIRA CARNEIRO",
+                "YSES FERNANDA COSTA GUIMARAES",
+                "ANA GABRIELLY MAGALHAES PEREIRA",
+                "CAUA ADRIEL DE MELO MOREIRA",
+                "CAUA ADRIEL DE MELO MOREIRA"
+            ],
+
+            "101": [
+                "ALEXSANDRO OLIVEIRA ABREU",
+                "AMANDA ESTER TEIXEIRA PEREIRA",
+                "ANA VITORIA PINTO SANTOS",
+                "ANNY GABRIELLY SILVA DA SILVA",
+                "CARLOS HENRIQUE VIANA DA CONCEICAO",
+                "CRISTIAN GOES SALES",
+                "DAVI NOGUEIRA GUSMAO DA SILVA",
+                "DOUGLAS RICARDO FERREIRA DO NASCIMENTO",
+                "EDNO FILIPPE DA SILVA DE OLIVEIRA",
+                "ELIAS ASAFE ALVES LIMA",
+                "EMILLY SOPHIA SILVA DE ARAUJO",
+                "ERICA LORRANY PEREIRA DOS SANTOS",
+                "ESTHER AZEVEDO DOS SANTOS NOGUEIRA",
+                "HEDSON CARLOS SILVA PINHEIRO",
+                "IURY KAUA DUARTE BATISTA",
+                "JULIA SANTOS FERREIRA",
+                "JULIANO DE SOUSA SILVA",
+                "KELLY BIANCA DE AMORIM DE AGUIAR",
+                "LUKAS PIETRO RIBEIRO FERREIRA",
+                "MARCOS VICTOR CARDOSO NUNES",
+                "MARIA CLARA DE SOUZA MACHADO",
+                "MARIA ELOYSA FRANCA SOEIRO",
+                "MARIA LIVIA SERRA AMORIM",
+                "MHAYSY ADRIELLY PIRES SANTOS",
+                "MIGUEL FELIPE DO NASCIMENTO LIMA",
+                "NICOLAS CORREIA CAVALCANTE VERAS",
+                "OTAVIO ALEHRANDRO SOARES COSTA",
+                "PEDRO HENRIQUE ALMEIDA BARROS",
+                "RIQUELME SILVA CARDOSO",
+                "VICTOR GABRIEL RODRIGUES DE SOUSA"
+            ],
+
+            "102": [
+                "ANA KELLY SILVA MELO IRMAO",
+                "ARTHUR DOS SANTOS DE SOUZA",
+                "CARLOS EDUARDO VIANA DA CONCEICAO",
+                "CRISTHYAN RYAN PESSOA BARBOSA",
+                "DAVI GUTERRES SILVA",
+                "ELAYNE DE OLIVEIRA DA SILVA",
+                "ELEN CRISTINA SANTOS PAIVA",
+                "EMANUELLE RHIANY COELHO RODRIGUES",
+                "ESTER DE JESUS RODRIGUES DA SILVA",
+                "GABRIEL DOS ANJOS DINIZ COSTA",
+                "GLEYCE KELLY MUNIZ COSTA",
+                "ISIS EDUARDA MENDES LUZ",
+                "KAIO ITALO OLIVEIRA SILVA",
+                "KASSIA VICTORIA MORAES FERREIRA",
+                "KELLY CRISTINA FERREIRA ROXO",
+                "KEVERSON GABRYELL GOMES SANTOS",
+                "LARA ISABELA SOUSA SILVA",
+                "LARISSA MARTINS PINHEIRO",
+                "LUANA SANTANA LIMA",
+                "LUIS FELIPE SOARES GARCIA",
+                "LUIS OTAVIO CARVALHO RODRIGUES",
+                "PAULO VITOR SILVA DE SOUSA",
+                "RYAN GABRIEL SILVA LOPES",
+                "ALEHANY RHYANNA COSTA PIRES",
+                "DAVI IVAN DOS SANTOS COELHO",
+                "EMYLLI KARINY COELHO RODRIGUES",
+                "DAVID MILLER SANTOS COSTA"
+            ],
+
+            "103": [
+                "ADRIAN SILVA PEREIRA",
+                "ALLYSON RENNAH RIBEIRO PEREIRA",
+                "ARTHUR FELIPE MARCELINO DA PAZ",
+                "BEYJAMYN FRANCK RODRIGUES CARDOSO",
+                "CAMILA BEATRIZ FERREIRA CAMAPUM",
+                "EVERTON CUNHA FERREIRA",
+                "FELIPE SALDANHA SOARES",
+                "FERNANDA SANTOS DINIZ",
+                "GREGORIO JOSE OLIVEIRA",
+                "HELOISE LIMA MARQUES",
+                "JAMILLY ELLEN PIRES",
+                "JOAO PEDRO DINIZ LOPES",
+                "JOAO VITOR FERREIRA RODRIGUES",
+                "JOVANE LEANDRO FERREIRA DA SILVA",
+                "KAYLA RANYERE FERREIRA SANTOS",
+                "LARA CAROLINE SILVA DA CRUZ",
+                "LAYANNE ANGEL DA SILVA SANTOS",
+                "LUCAS YURE OLIVEIRA NOGUEIRA",
+                "LUCIANA DA SILVA GONCALVES",
+                "MARCIO DANIEL PEREIRA LOPES GONCALVES",
+                "MARIA GABRIELA CRUZ DA SILVA",
+                "MAURICIU FERNANDO GUSMAO BARROS",
+                "RICARDO JONATAS SILVA AGUIAR",
+                "SORAYA SOARES OLIVEIRA DA SILVA",
+                "THAYANI GABRYELE BORE PINTO",
+                "WANDERSON CARLOS FRAZAO OLIVEIRA",
+                "EVELYN SOPHIA LIMA LOBO"
+            ],
+
+            "200": [
+                "ANA CLARA FONSECA SOARES",
+                "ANA VICTORIA TRINDADE MOREIRA",
+                "ANDREW LUCAS DA SILVA ROCHA",
+                "CAMILA CLAYNE ATAIDE DE CARVALHO",
+                "CARLOS DIEGO PEREIRA VIEGAS",
+                "DANIEL MORAES SA",
+                "DAVI PAIXAO MUNIZ FERREIRA",
+                "DAVY TEIXEIRA PINTO",
+                "ELYAS ROBSON PIMENTA DA SILVA",
+                "EMILLY DOS SANTOS CARVALHO",
+                "EMILLY VITORIA DE MORAES",
+                "EMYLLY THAUANNY DOS SANTOS PESSOA",
+                "FARLLEY JHONATAN FERREIRA MENDONCA",
+                "GABRIELLE CUTRIM LINDOSO",
+                "GLEICY JULIA LIMA DOS SANTOS",
+                "GUILHERME HENRIQUE MARTINS LOPES",
+                "IANNY VITORIA BARBOSA BALDEZ",
+                "ISABELLY FRAZAO SILVA",
+                "ITALO KAUA FERRAZ ALMEIDA",
+                "JHENNYFER NATHALIA SANTOS SILVA",
+                "JOAO VICTOR SERRA MARAMALDO",
+                "JULIA COSTA BOTENTUIT PIRES",
+                "KAYLANE EMYLLE DA SILVA SANTOS",
+                "LAIANE LIMA SOUSA",
+                "LAYNA VICTORIA FERREIRA LIMA",
+                "LUAN GABRIEL LIMA CORREIA",
+                "LUCAS RHYAN BEZERRA BRITO",
+                "LUNA GABRIELE LIMA CORREIA",
+                "MARIA CLARA DOS SANTOS ARAUJO",
+                "MAYSA EDUARDA DAMASCENO BRITO",
+                "NAUANY CRISTINNI DA SILVA AGUIAR",
+                "PAULA FERNANDA PONTES SERRA",
+                "PAULO VITOR GOMES SOARES",
+                "RAFAELA VITORIA NASCIMENTO ALMEIDA",
+                "RAFAELI COSTA DA SILVA"
+            ],
+
+            "201": [
+                "ADAILTON CONCEICAO SOARES FILHO",
+                "ADRIANO OLIVEIRA DA SILVA",
+                "ANA RAQUEL MAIA RODRIGUES",
+                "ANDERSON KAIC COSTA COIMBRA",
+                "ARTHUR LUCAS SERRA AMORIM",
+                "BRUNA LUIZA DOS SANTOS DA SILVA",
+                "CAIO ROBERTO WOLFF PRIVADO",
+                "CAMILA RAQUEL MELO MONTEIRO",
+                "CARLA CRISTINA ROCHA MELO",
+                "CARLOS LEANDRO NUNES FERREIRA",
+                "DAVID DE SOUZA LOPES",
+                "GUILHERME EDUARDO CUTRIM LINDOSO",
+                "IANNA RAFAELA SOUZA DOS SANTOS",
+                "ISABEL DE ALENCAR MALVAO",
+                "IVANIELE DA SILVA SOUSA",
+                "JOAO GUILHERME ABRAAO DE SOUSA",
+                "JOAO GUILHERME MORAIS SILVA",
+                "JOAO VICTOR BEZERRA DA SILVA",
+                "LUCAS GABRIEL SANTOS DE MELLO",
+                "MARIA EDUARDA BEZERRA SALVIANO DE OLIVEIRA",
+                "MARIA ESTER MARTINS DE LIMA",
+                "MATIAS NATHAN SEREJO JAIME",
+                "MELISSA EMILY COSTA DA SILVA",
+                "NAOMY CECILLIA ALVES DE SOUSA",
+                "PAULA BEATRIZ FERREIRA DOS SANTOS",
+                "PEDRO LUCAS COSTA GONCALVES",
+                "RHAYNARA RAQUEL MOTA DE MATOS",
+                "RICHARD MONROE COLARES",
+                "RYAN RIQUELME SOUZA LEMOS CONCEICAO",
+                "SARAH CRISTHINI OLIVEIRA MONSORES BORGES",
+                "SIMON CESAR ARAUJO SILVA LIMA",
+                "SOPHIA TAINA GOMES DIAS SOARES",
+                "SOPHYA BEATRIZ AZEVEDO BORGES",
+                "YASMIN STEFHANY SEREJO DA SILVA"
+            ],
+
+            "202": [
+                "ANA CLARA GOIABEIRA DOS ANJOS",
+                "ANA FLAVIA FERREIRA DINIZ",
+                "ANNE GRAZIELLE CARDOSO ROCHA",
+                "BRENDA LORRANE DE JESUS NUNES",
+                "CAROLYNE MOREIRA CALDAS",
+                "DAVID DOS ANJOS SERPA",
+                "DEBORA FERNANDA SOUSA SILVA",
+                "EMANUELE VICTORIA PIEDADE MENEZES",
+                "ENDREW DLUCAS SANTOS NERY",
+                "GABRIEL HENRIQUE DA SILVA QUADROS AIRES",
+                "JULLYANA CELIANE CORREIA NUNES",
+                "KRUAN RODRIGUES GOMES",
+                "LEONARDO NASCIMENTO BEZERRA",
+                "LETICIA MENDES COSTA",
+                "LUCIANO SILVA CARDOSO",
+                "LUIS GUSTAVO SANTOS GARCES",
+                "SARAH REBECA DANTAS BARROS",
+                "THALITA KETHELYN SOUSA BATISTA",
+                "THAYLA IZABEL OLIVEIRA RAMOS",
+                "THOMAS ALEJANDRO PEREIRA SANTOS",
+                "ULISSES HEITOR MARQUES FONTINELE",
+                "WELITON FILHO MACIEL DE OLIVEIRA",
+                "YARA CRISTINA GOMES DOS SANTOS",
+                "YARA ISABELLE DE SOUZA MACHADO",
+                "YONARA NASCIMENTO NEVES DE FRANCA"
+            ],
+
+            "300": [
+                "ANA CAROLINA LOPES DA SILVA",
+                "CAIO NICOLAS FONSECA MIRANDA",
+                "DANIELY CRISTINA SILVA DE ALMEIDA",
+                "DEBORA SOFIA MARTINS LOPES",
+                "EMANUELE DOS SANTOS CARVALHO",
+                "EMELY MACHADO DE JESUS",
+                "ERIK KAUAN ALMEIDA OLIVEIRA",
+                "EVILLY REGINA BARBOSA ALMEIDA",
+                "FLAVIA RODRIGUES DE OLIVEIRA",
+                "GABRYELLA FRANCISCA SOUSA SILVA",
+                "GUSTAVO CARVALHO HENRIQUE",
+                "GUSTAVO HENRIQUE OLIVEIRA POLARY",
+                "INGRID MARE SANTOS DE SOUSA",
+                "JAIANE DA COSTA FERREIRA",
+                "JEFFERSON AUGUSTO VIEIRA DE OLIVEIRA",
+                "JHEMILLY VITORIA SOARES GARCIA",
+                "KAREN FERNANDA VEIGA HENRIQUE",
+                "KEMILLY VITORIA ARAUJO SOUSA LIMA",
+                "KRISTIAN DE OLIVEIRA SOUZA",
+                "LARA REBECA MELO NEVES",
+                "LINDA AGATHA DA SILVA E SILVA",
+                "LUIS MURILO VIANA FREIRE",
+                "MARCOS VINICIUS BOAVIDA LIMA",
+                "MARIA EDUARDA FERREIRA OLIVEIRA",
+                "MICHELE PEREIRA",
+                "NAYLA DA COSTA MATIAS",
+                "PEDRO LUCAS SILVA DOS SANTOS",
+                "RHIAN ICARO SOUSA MONTELES",
+                "SAMUEL MURILO CANTANHEDE FERNANDO",
+                "TASSYA EMANUELLE DOS SANTOS ROCHA",
+                "THALLYSON RUAN COSTA OLIVEIRA",
+                "THARCYO CLEYLTON BARROS RODRIGUES",
+                "YURI DAVS FARIAS CORREA"
+            ],
+
+            "301": [
+                "ALAN PEREIRA PAOSINHO SILVA",
+                "ANNA CRISTINA DAS NEVES CARVALHO",
+                "ANTONIA VICTORIA RIBEIRO FERREIRA",
+                "CHRISTIANO HERBET COSTA CARVALHO",
+                "CLEILTON FONSECA ALCANTARA FILHO",
+                "ERQUISON GABRIEL CANTANHEDE DA SILVA",
+                "GUILHERME MOREIRA BATISTA",
+                "GUSTAVO OLIVEIRA RABELO",
+                "GUYLLHERME RYCKELMY REIS MATOS",
+                "ITALO IAM CAMARA AMARAL",
+                "JOAO ALBERICO COSTA DE AMORIM",
+                "JOAO VITOR SILVA DE MORAES CAMARA",
+                "JUAN GABRYEL DA SILVA PEREIRA",
+                "KAYO VITOR FURTADO VELOSO",
+                "LUCAS ABRAAO CHAVES DIAS BORGES",
+                "NATHAN BRIAN CARNEIRO OLIVEIRA",
+                "PEDRO LUCAS LOPES SOUSA",
+                "RAIMUNDO NONATO PROTAZIO SOUSA SOBRINHO",
+                "RICARDO RAFAEL OLIVEIRA BRITO",
+                "SARA LETICIA SILVA DE BRITO",
+                "SARAH CHRISTINNY SOUSA MARQUES",
+                "VITORIA REGIA DA SILVA",
+                "YANNY KELLY COSTA CARDOSO",
+                "YTHALLO CESAR RODRIGUES BARROS"
+            ],
+
+            "302": [
+                "ANA BEATRIZ FERREIRA ALVES",
+                "BRENO CRISTYAN VIANA DE CASTRO",
+                "DAVID SILVA BATISTA",
+                "ELYAQUIM DA SILVA COSTA",
+                "EMILLY ESTEFANY DOS SANTOS NOGUEIRA",
+                "EMILLY LAYS SOUSA ROCHA",
+                "EVYNLLE DANIELE ROCHA LEAL",
+                "GABRIEL SILVA DA HORA",
+                "GUILHERME DELGADO DE SOUSA",
+                "ITAUANNA FERREIRA MARINHO",
+                "JARLISON OLIVEIRA NICACIO",
+                "JOAO PEDRO LIMA SALLES",
+                "JOAO VICTOR BOAVIDA LIMA",
+                "LEANDRO DE SOUZA ALENCAR",
+                "MARINA SILVA CORREA",
+                "MATHEUS SILVA BEZERRA",
+                "OTAVIO VICTOR NEVES MARQUES",
+                "RAYLAN VITOR FARIAS MOREIRA",
+                "SABRINA FERREIRA DA SILVA",
+                "SILVANE DA CONCEICAO SANTOS",
+                "TEONES DOS SANTOS FONSECA JUNIOR",
+                "YASMIN JAINE FARIAS DINIZ"
+            ]
+
+        };
+
+
+        /*
+        ============================================================
+        CRIAÇÃO DOS ALUNOS
+        ============================================================
+        */
+
+        let alunos = [];
+        let contadorId = 1;
+
+        Object.keys(turmas).forEach(turma => {
+
+            turmas[turma].forEach((nome, index) => {
+
+                let situacao;
+
+                const sorteio = Math.random();
+
+                if (sorteio < 0.55) {
+                    situacao = "aprovado";
+                } else if (sorteio < 0.78) {
+                    situacao = "recuperacao";
+                } else {
+                    situacao = "reprovado";
+                }
+
+
+                let mediaBase;
+                let faltas;
+
+
+                if (situacao === "aprovado") {
+
+                    mediaBase = 7 + Math.random() * 2.5;
+                    faltas = Math.floor(2 + Math.random() * 9);
+
+                } else if (situacao === "recuperacao") {
+
+                    mediaBase = 5 + Math.random() * 1.7;
+                    faltas = Math.floor(8 + Math.random() * 10);
+
+                } else {
+
+                    mediaBase = 2.5 + Math.random() * 2.3;
+                    faltas = Math.floor(12 + Math.random() * 20);
+
+                }
+
+
+                alunos.push({
+
+                    id: contadorId++,
+
+                    nome: nome,
+
+                    turma: turma,
+
+                    matricula:
+                        "2026" +
+                        turma +
+                        String(index + 1).padStart(2, "0"),
+
+                    situacao: situacao,
+
+                    mediaBase: mediaBase,
+
+                    faltas: faltas
+
+                });
+
+            });
+
+        });
+
+
+        /*
+        ============================================================
+        SITUAÇÕES DEFINIDAS PELO USUÁRIO
+        ============================================================
+        */
+
+        alunos.forEach(aluno => {
+
+            if (
+                aluno.nome ===
+                "CHRISTIANO HERBET COSTA CARVALHO" ||
+
+                aluno.nome ===
+                "GUILHERME MOREIRA BATISTA" ||
+
+                aluno.nome ===
+                "YANNY KELLY COSTA CARDOSO"
+            ) {
+
+                aluno.situacao = "aprovado";
+
+                aluno.mediaBase = 9.2;
+
+                aluno.faltas = 4;
+
+            }
+
+
+            if (
+                aluno.nome ===
+                "NATHAN BRIAN CARNEIRO OLIVEIRA"
+            ) {
+
+                aluno.situacao = "reprovado";
+
+                aluno.mediaBase = 4.1;
+
+                aluno.faltas = 32;
+
+            }
+
+        });
+
+
+        /*
+        ============================================================
+        GERAR NOTAS
+        ============================================================
+        */
+
+        function gerarNotas(aluno) {
+
+            let base = aluno.mediaBase;
+
+            let variacao1 = (Math.random() * 1.2) - 0.6;
+            let variacao2 = (Math.random() * 1.2) - 0.6;
+            let variacao3 = (Math.random() * 1.2) - 0.6;
+            let variacao4 = (Math.random() * 1.2) - 0.6;
+            let variacao5 = (Math.random() * 1.2) - 0.6;
+
+
+            function limitar(valor) {
+
+                return Math.max(
+                    0,
+                    Math.min(10, valor)
+                ).toFixed(1);
+
+            }
+
+
+            const materias = [
+
+                {
+                    nome: "Matemática",
+                    nota1: limitar(base + variacao1),
+                    nota2: limitar(base + variacao2)
+                },
+
+                {
+                    nome: "Português",
+                    nota1: limitar(base + variacao2),
+                    nota2: limitar(base + variacao3)
+                },
+
+                {
+                    nome: "História",
+                    nota1: limitar(base + variacao3),
+                    nota2: limitar(base + variacao4)
+                },
+
+                {
+                    nome: "Ciências",
+                    nota1: limitar(base + variacao4),
+                    nota2: limitar(base + variacao5)
+                },
+
+                {
+                    nome: "Geografia",
+                    nota1: limitar(base + variacao5),
+                    nota2: limitar(base + variacao1)
+                }
+
+            ];
+
+
+            materias.forEach(materia => {
+
+                materia.media = (
+                    (
+                        Number(materia.nota1) +
+                        Number(materia.nota2)
+                    ) / 2
+                ).toFixed(1);
+
+            });
+
+
+            return materias;
+
+        }
+
+
+        /*
+        ============================================================
+        FUNÇÃO PARA MOSTRAR SITUAÇÃO
+        ============================================================
+        */
+
+        function textoSituacao(situacao) {
+
+            if (situacao === "aprovado") {
+                return "Aprovado";
+            }
+
+            if (situacao === "recuperacao") {
+                return "Recuperação";
+            }
+
+            return "Reprovado";
+
+        }
+
+
+        /*
+        ============================================================
+        GERAR UM ALUNO NA TELA
+        ============================================================
+        */
+
+        function criarAlunoHTML(aluno) {
+
+            const notas = gerarNotas(aluno);
+
+            let mediaGeral = 0;
+
+            notas.forEach(materia => {
+
+                mediaGeral += Number(
+                    materia.media
+                );
+
+            });
+
+            mediaGeral = (
+                mediaGeral / notas.length
+            ).toFixed(1);
+
+
+            /*
+            Mensagem do Pé-de-Meia
+            */
+
+            let mensagem;
+            let classeMensagem;
+
+            if (aluno.situacao === "reprovado") {
+
+                mensagem =
+                    "⚠ PÉ-DE-MEIA BLOQUEADO POR EXCESSO DE FALTAS";
+
+                classeMensagem = "alerta";
+
+            } else if (aluno.situacao === "recuperacao") {
+
+                mensagem =
+                    "⚠ PÉ-DE-MEIA ATIVO • ALUNO EM RECUPERAÇÃO";
+
+                classeMensagem = "recuperacao-alerta";
+
+            } else {
+
+                mensagem =
+                    "✅ PÉ-DE-MEIA ATIVO • FREQUÊNCIA REGULAR";
+
+                classeMensagem = "sucesso";
+
+            }
+
+
+            let linhas = "";
+
+            notas.forEach(materia => {
+
+                let classeStatus =
+                    aluno.situacao === "aprovado"
+                        ? "aprovado-text"
+                        : aluno.situacao === "recuperacao"
+                            ? "recuperacao-text"
+                            : "reprovado-text";
+
+
+                linhas += `
+
+                    <tr>
+
+                        <td>
+                            ${materia.nome}
+                        </td>
+
+                        <td>
+                            ${materia.nota1.replace(".", ",")}
+                        </td>
+
+                        <td>
+                            ${materia.nota2.replace(".", ",")}
+                        </td>
+
+                        <td>
+                            ${materia.media.replace(".", ",")}
+                        </td>
+
+                        <td>
+                            ${Math.floor(
+                                aluno.faltas / 5
+                            )}
+                        </td>
+
+                        <td class="${classeStatus}">
+                            ${textoSituacao(aluno.situacao)}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+
+            return `
+
+                <section class="aluno">
+
+                    <h2>
+                        ${aluno.nome}
+                    </h2>
+
+                    <p>
+                        Turma: ${aluno.turma}
+                        • Matrícula: ${aluno.matricula}
+                    </p>
+
+                    <span class="situacao ${aluno.situacao}">
+                        ${textoSituacao(aluno.situacao)}
+                    </span>
+
+                </section>
+
+
+                <div class="${classeMensagem}">
+                    ${mensagem}
+                </div>
+
+
+                <div class="tabela-container">
+
+                    <table>
+
+                        <tr>
+
+                            <th>Matéria</th>
+                            <th>1º Bim</th>
+                            <th>2º Bim</th>
+                            <th>Média</th>
+                            <th>Faltas</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                        ${linhas}
+
+                    </table>
+
+                </div>
+
+
+                <div class="cards">
+
+                    <div class="card">
+
+                        <h3>
+                            Média Geral
+                        </h3>
+
+                        <span>
+                            ${mediaGeral.replace(".", ",")}
+                        </span>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3>
+                            Total de Faltas
+                        </h3>
+
+                        <span>
+                            ${aluno.faltas}
+                        </span>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3>
+                            Pé-de-Meia
+                        </h3>
+
+                        <span>
+                            ${
+                                aluno.situacao === "reprovado"
+                                    ? "BLOQUEADO"
+                                    : "ATIVO"
+                            }
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <hr class="separador">
+
+            `;
+
+        }
+
+
+        /*
+        ============================================================
+        RENDERIZAR ALUNOS
+        ============================================================
+        */
+
+        function renderizar() {
+
+            const busca =
+                document
+                    .getElementById("pesquisa")
+                    .value
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "");
+
+
+            const turmaSelecionada =
+                document
+                    .getElementById("filtroTurma")
+                    .value;
+
+
+            const filtrados = alunos.filter(aluno => {
+
+                const nome =
+                    aluno.nome
+                        .toLowerCase()
+                        .normalize("NFD")
+                        .replace(/[\u0300-\u036f]/g, "");
+
+
+                const encontrouNome =
+                    nome.includes(busca);
+
+
+                const encontrouTurma =
+                    turmaSelecionada === "todas" ||
+                    aluno.turma === turmaSelecionada;
+
+
+                return (
+                    encontrouNome &&
+                    encontrouTurma
+                );
+
+            });
+
+
+            const lista =
+                document.getElementById("listaAlunos");
+
+
+            const nenhum =
+                document.getElementById("nenhum");
+
+
+            lista.innerHTML = "";
+
+
+            document.getElementById("contador").textContent =
+                filtrados.length +
+                (
+                    filtrados.length === 1
+                        ? " aluno encontrado"
+                        : " alunos encontrados"
+                );
+
+
+            if (filtrados.length === 0) {
+
+                nenhum.style.display = "block";
+
+                return;
+
+            }
+
+
+            nenhum.style.display = "none";
+
+
+            filtrados.forEach(aluno => {
+
+                lista.innerHTML +=
+                    criarAlunoHTML(aluno);
+
+            });
+
+        }
+
+
+        /*
+        ============================================================
+        PESQUISA
+        ============================================================
+        */
+
+        document
+            .getElementById("pesquisa")
+            .addEventListener(
+                "input",
+                renderizar
+            );
+
+
+        /*
+        ============================================================
+        FILTRO POR TURMA
+        ============================================================
+        */
+
+        document
+            .getElementById("filtroTurma")
+            .addEventListener(
+                "change",
+                renderizar
+            );
+
+
+        /*
+        ============================================================
+        INICIAR
+        ============================================================
+        */
+
+        renderizar();
+
+    </script>
+
+</body>
+
+</html>
